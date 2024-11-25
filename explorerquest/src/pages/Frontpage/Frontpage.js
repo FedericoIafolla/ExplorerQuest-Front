@@ -1,27 +1,90 @@
-import React, { useEffect, useState } from 'react';
-import './Login.css';
-import roma from '../assets/Roma.jpg';
-import kamakura from '../assets/Kamakura.jpg';
-import newyork from '../assets/NewYork.jpg';
-import kyoto from '../assets/Kyoto.jpg';
-import paris from '../assets/Parigi.jpg';
-import atene from '../assets/Atene.jpg'; // Nuova città
-import tajmahal from '../assets/TajMahal.jpg'; // Nuova città
-import machupichu from '../assets/MachuPichu.jpg'; // Nuova città
-import sanpaolo from '../assets/SanPaolo.jpg';
-import londra from '../assets/Londra.jpg';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Frontpage.css';
+import roma from '../../assets/Roma.jpg';
+import kamakura from '../../assets/Kamakura.jpg';
+import newyork from '../../assets/NewYork.jpg';
+import kyoto from '../../assets/Kyoto.jpg';
+import paris from '../../assets/Parigi.jpg';
+import atene from '../../assets/Atene.jpg';
+import tajmahal from '../../assets/TajMahal.jpg';
+import machupichu from '../../assets/MachuPichu.jpg';
+import sanpaolo from '../../assets/SanPaolo.jpg';
+import londra from '../../assets/Londra.jpg';
+import LoginModal from '../../components/LoginModal/LoginModal';
+import '../../components/LoginModal/LoginModal.css';
+import Navbar from '../../components/Navbar/Navbar';
 
-const Login = () => {
+const Frontpage = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const images = [roma, kamakura, newyork, kyoto, paris];
+    const images = [roma, kamakura, newyork, kyoto, paris, atene, tajmahal, machupichu, sanpaolo, londra];
     const [showSubscribeModal, setShowSubscribeModal] = useState(false);
     const [showSeeMoreModal, setShowSeeMoreModal] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const timeAutoNext = 7000;
+    const timerRef = useRef(null);
+
+    const showSlider = (type) => {
+        const carousel = document.querySelector('.carousel');
+        const slider = carousel.querySelector('.list');
+        const thumbnailBorder = document.querySelector('.carousel .thumbnail');
+        const sliderItems = slider.querySelectorAll('.carousel .list .item');
+        const thumbnailItems = document.querySelectorAll('.carousel .thumbnail .item');
+
+        if (type === 'next') {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+            slider.appendChild(sliderItems[0]);
+            thumbnailBorder.appendChild(thumbnailItems[0]);
+            carousel.classList.add('next');
+        } else {
+            setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+            slider.prepend(sliderItems[sliderItems.length - 1]);
+            thumbnailBorder.prepend(thumbnailItems[thumbnailItems.length - 1]);
+            carousel.classList.add('prev');
+        }
+
+        setTimeout(() => {
+            carousel.classList.remove('next');
+            carousel.classList.remove('prev');
+        }, 1000);
+    };
+
+    const handleNext = () => {
+        resetTimer();
+        showSlider('next');
+    };
+
+    const handlePrev = () => {
+        const content = document.querySelector('.list .item .content');
+        content.classList.add('instant-hide');
+        resetTimer();
+        showSlider('prev');
+        setTimeout(() => {
+            content.classList.remove('instant-hide');
+        }, 100);
+    };
+
+    const resetTimer = () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+        timerRef.current = setTimeout(() => {
+            showSlider('next');
+        }, timeAutoNext);
+    };
+
+    useEffect(() => {
+        resetTimer();
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     const handleButtonClick = (action) => {
         if (action === 'SEE MORE') {
             setShowSeeMoreModal(true);
         } else if (action === 'SUBSCRIBE') {
-            setShowSubscribeModal(true);
+            setShowLoginModal(true);
         }
     };
 
@@ -31,29 +94,32 @@ const Login = () => {
         const thumbnailBorder = document.querySelector('.carousel .thumbnail');
         const thumbnailItems = thumbnailBorder.querySelectorAll('.item');
 
-        let timeRunning = 2500;
-        let timeAutoNext = 7000;
+        let timeRunning = 3000;
+        let timeAutoNext = 8000;
 
         const showSlider = (type) => {
+            const carousel = document.querySelector('.carousel');
+            const slider = carousel.querySelector('.list');
+            const thumbnailBorder = document.querySelector('.carousel .thumbnail');
             const sliderItems = slider.querySelectorAll('.carousel .list .item');
-            const thumbnailItemsDom = document.querySelectorAll('.carousel .thumbnail .item');
+            const thumbnailItems = document.querySelectorAll('.carousel .thumbnail .item');
 
             if (type === 'next') {
-                setCurrentIndex((prevIndex) => (prevIndex + 1) % sliderItems.length);
-                thumbnailBorder.appendChild(thumbnailItemsDom[0]);
+                setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
                 slider.appendChild(sliderItems[0]);
+                thumbnailBorder.appendChild(thumbnailItems[0]);
                 carousel.classList.add('next');
             } else {
-                setCurrentIndex((prevIndex) => (prevIndex - 1 + sliderItems.length) % sliderItems.length);
-                thumbnailBorder.prepend(thumbnailItemsDom[thumbnailItemsDom.length - 1]);
+                setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
                 slider.prepend(sliderItems[sliderItems.length - 1]);
+                thumbnailBorder.prepend(thumbnailItems[thumbnailItems.length - 1]);
                 carousel.classList.add('prev');
             }
 
             setTimeout(() => {
                 carousel.classList.remove('next');
                 carousel.classList.remove('prev');
-            }, timeRunning);
+            }, 1000);
         };
 
         const runNextAuto = setInterval(() => {
@@ -67,28 +133,24 @@ const Login = () => {
 
     return (
         <div>
-            <header>
-                <nav>
-                    <a href="">Home</a>
-                    <a href="">Contacts</a>
-                    <a href="">Info</a>
-                </nav>
-            </header>
-
             <div className="carousel">
+                <div className="arrows">
+                    <button onClick={handlePrev} id="prev">&lt;</button>
+                    <button onClick={handleNext} id="next">&gt;</button>
+                </div>
                 <div className="list">
                     <div className="item">
                         <img src={images[currentIndex]} alt="Roma" />
                         <div className="content">
                             <div className="author">EXPLORER QUEST</div>
                             <div className="title">ROMA</div>
-                            <div className="topic">TRAVEL</div>
+                            <div className="topic">ITALIA</div>
                             <div className="des">
-                                Esplora la bellezza di Roma, una delle città più iconiche del mondo!
+                                copri Roma, la città eterna dove storia e cultura si intrecciano. Passeggia tra antiche rovine come il Colosseo e il Foro Romano, ammira la maestosità della Basilica di San Pietro e goditi la magia di una città che incanta in ogni angolo.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -99,11 +161,11 @@ const Login = () => {
                             <div className="title">KAMAKURA</div>
                             <div className="topic">JAPAN</div>
                             <div className="des">
-                                Scopri Kamakura, famosa per i suoi templi e la tranquillità!
+                                Kamakura è un'oasi di pace e bellezza in Giappone. Celebre per il Grande Buddha e i templi Zen come il Kotoku-in, è il luogo perfetto per immergersi nella spiritualità e nella serenità della cultura giapponese.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -114,11 +176,11 @@ const Login = () => {
                             <div className="title">NEW YORK</div>
                             <div className="topic">USA</div>
                             <div className="des">
-                                Vivi l'energia e il dinamismo di New York City!
+                                Vivi l'energia di New York, la città che non dorme mai. Dalla Statua della Libertà a Central Park, passando per i grattacieli di Manhattan, questa metropoli è il centro pulsante di cultura, arte e innovazione.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -129,11 +191,11 @@ const Login = () => {
                             <div className="title">KYOTO</div>
                             <div className="topic">JAPAN</div>
                             <div className="des">
-                                Esplora Kyoto, la città dei templi e dei giardini zen!
+                                Kyoto è il cuore culturale del Giappone. Famosa per i suoi templi buddisti, come il Kinkaku-ji, e i suoi giardini Zen, la città offre un viaggio nel tempo tra geisha, case da tè tradizionali e paesaggi mozzafiato.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -144,11 +206,11 @@ const Login = () => {
                             <div className="title">PARIGI</div>
                             <div className="topic">FRANCE</div>
                             <div className="des">
-                                Scopri Parigi, la città dell'amore e delle luci!
+                                Parigi, la città dell'amore e delle luci, è un capolavoro di bellezza e romanticismo. Visita la Torre Eiffel, passeggia lungo la Senna e immergiti nell'arte del Louvre per vivere un'esperienza indimenticabile.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -159,11 +221,11 @@ const Login = () => {
                             <div className="title">LONDRA</div>
                             <div className="topic">ENGLAND</div>
                             <div className="des">
-                                Scopri Parigi, la città dell'amore e delle luci!
+                                Londra è una città vibrante dove storia e modernità convivono. Ammira il Big Ben, il Tower Bridge e Buckingham Palace, e goditi l’atmosfera unica dei mercati, dei parchi e dei quartieri cosmopoliti.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -174,11 +236,11 @@ const Login = () => {
                             <div className="title">ATENE</div>
                             <div className="topic">GREECE</div>
                             <div className="des">
-                                Scopri Kamakura, famosa per i suoi templi e la tranquillità!
+                                Atene, culla della civiltà occidentale, offre un mix di storia antica e vita moderna. Esplora l'Acropoli e il Partenone, passeggia nei vicoli del quartiere Plaka e goditi il tramonto sull'antico Agorà.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -187,13 +249,13 @@ const Login = () => {
                         <div className="content">
                             <div className="author">EXPLORER QUEST</div>
                             <div className="title">TAJ MAHAL</div>
-                            <div className="topic">JAPAN</div>
+                            <div className="topic">INDIA</div>
                             <div className="des">
-                                Scopri Kamakura, famosa per i suoi templi e la tranquillità!
+                                Il Taj Mahal, simbolo d'amore eterno, è uno dei monumenti più spettacolari del mondo. Situato ad Agra, in India, incanta i visitatori con la sua architettura in marmo bianco e la sua storia commovente.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -204,11 +266,11 @@ const Login = () => {
                             <div className="title">SAN PAOLO</div>
                             <div className="topic">BRASIL</div>
                             <div className="des">
-                                Scopri Kamakura, famosa per i suoi templi e la tranquillità!
+                                San Paolo, cuore pulsante del Brasile, è una metropoli cosmopolita ricca di cultura e diversità. Esplora il quartiere artistico di Vila Madalena, i musei di fama mondiale e assapora la vibrante cucina brasiliana.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -219,11 +281,11 @@ const Login = () => {
                             <div className="title">MACHU PICHU</div>
                             <div className="topic">MEXICO</div>
                             <div className="des">
-                                Scopri Kamakura, famosa per i suoi templi e la tranquillità!
+                                Machu Picchu, la città perduta degli Inca, è un sito archeologico unico nelle Ande con panorami mozzafiato e un profondo legame spirituale.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>SEE MORE</button>
-                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>SUBSCRIBE</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
                     </div>
@@ -261,35 +323,35 @@ const Login = () => {
                         <img src={londra} alt="Thumbnail Londra" />
                         <div className="content">
                             <div className="title">LONDRA</div>
-                            <div className="description">Fascino giapponese</div>
+                            <div className="description">Tradizione e modernità</div>
                         </div>
                     </div>
                     <div className="item">
                         <img src={atene} alt="Thumbnail Atene" />
                         <div className="content">
                             <div className="title">ATENE</div>
-                            <div className="description">Fascino giapponese</div>
+                            <div className="description">Culla della civiltà</div>
                         </div>
                     </div>
                     <div className="item">
                         <img src={tajmahal} alt="Thumbnail Taj Mahal" />
                         <div className="content">
                             <div className="title">TAJ MAHAL</div>
-                            <div className="description">Fascino giapponese</div>
+                            <div className="description">Simbolo d'amore eterno</div>
                         </div>
                     </div>
                     <div className="item">
                         <img src={sanpaolo} alt="Thumbnail San Paolo" />
                         <div className="content">
                             <div className="title">San Paolo</div>
-                            <div className="description">Fascino giapponese</div>
+                            <div className="description">Energia cosmopolita</div>
                         </div>
                     </div>
                     <div className="item">
                         <img src={machupichu} alt="Thumbnail Machu Pichu" />
                         <div className="content">
                             <div className="title">Machu Pichu</div>
-                            <div className="description">Fascino giapponese</div>
+                            <div className="description">Meraviglia sulle Ande</div>
                         </div>
                     </div>
                     <div className="item">
@@ -301,9 +363,10 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+
+            {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
         </div>
     );
 };
 
-export default Login;
-
+export default Frontpage;
