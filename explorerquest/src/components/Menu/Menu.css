@@ -1,0 +1,84 @@
+/* Menu Styles */
+.hp-menu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  background: #111;
+  z-index: 1000;
+  transition: right 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.hp-menu.hp-active {
+  right: 0;
+}
+
+.hp-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hp-menu ul li {
+  margin: 20px 0;
+}
+
+.hp-menu ul li a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.hp-menu ul li a:hover {
+  color: #66eeb3;
+}
+
+/* Menu Toggle Button */
+.hp-menu-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 30px;
+  color: #fff;
+}
+
+/* Default icon style */
+.hp-menu-toggle span {
+  font-size: 30px;
+  color: #fff;
+  transition: opacity 0.3s ease;
+}
+
+/* Hamburger icon */
+.hp-menu-toggle .hp-open-menu {
+  display: block;
+  opacity: 1;
+}
+
+/* Hide hamburger icon when menu is active */
+.hp-menu.hp-active ~ .hp-menu-toggle .hp-open-menu {
+  display: none;
+  opacity: 0;
+}
+
+/* Close icon */
+.hp-menu-toggle .hp-close-menu {
+  display: none;
+  opacity: 0;
+}
+
+/* Show close icon when menu is active */
+.hp-menu.hp-active ~ .hp-menu-toggle .hp-close-menu {
+  display: block;
+  opacity: 1;
+}

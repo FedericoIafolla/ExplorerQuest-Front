@@ -1,0 +1,131 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.weather-main {
+  width: 300px;
+  height: max-content;
+  min-height: 300px;
+  background-color: #ececec;
+  border-radius: 30px;
+  box-shadow: 0 30px 50px #5553;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.weather-main form {
+  border: 1px solid #5552;
+  display: flex;
+  border-radius: 30px;
+  justify-content: space-between;
+}
+
+.weather-main form input,
+.weather-main form button {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.weather-main form i {
+  opacity: 0.7;
+}
+
+.weather-main .result {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.weather-main .result .name {
+  font-weight: bold;
+  font-size: large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #000;
+}
+
+.weather-main .temperature img {
+  width: 150px;
+  filter: drop-shadow(0 10px 50px #555);
+}
+
+.weather-main .temperature figcaption {
+  font-size: 3em;
+  color: #000;
+}
+
+.weather-main .description {
+  padding: 10px 0 30px;
+  color: #000000;
+  font-weight: 500;
+}
+
+.weather-main ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.weather-main li {
+  background-color: #f78a55;
+  color: #fff;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-image: linear-gradient(to bottom, transparent 50%, #0003 50%);
+  font-weight: bold;
+  font-size: small;
+}
+
+.weather-main ul li {
+  background-color: #f78a55;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  background-image: linear-gradient(to bottom, transparent 50%, #0003 50%);
+  font-weight: bold;
+  font-size: small;
+  display: flex;
+  flex-direction: column; /* Impila i contenuti verticalmente */
+  align-items: center; /* Centra i contenuti */
+  text-align: center; /* Centra il testo */
+}
+
+.weather-main ul li span:last-child {
+  white-space: nowrap; /* Evita che il valore vada a capo */
+}
+
+.weather-main li:nth-child(2) {
+  background-color: #b56291;
+}
+
+.weather-main li:nth-child(3) {
+  background-color: #48567b;
+}
+
+.weather-main.error {
+  animation: errorEffect 0.3s linear 1;
+}
+
+@keyframes errorEffect {
+  0% {
+    transform: translate(10px, 5px);
+  }
+  25% {
+    transform: translate(-5px, 0);
+  }
+  50% {
+    transform: translate(8px, 2px);
+  }
+  75% {
+    transform: translate(-2px, 5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}

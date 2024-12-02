@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
 import './Frontpage.css';
 import roma from '../../assets/Roma.jpg';
 import kamakura from '../../assets/Kamakura.jpg';
@@ -13,7 +14,6 @@ import sanpaolo from '../../assets/SanPaolo.jpg';
 import londra from '../../assets/Londra.jpg';
 import LoginModal from '../../components/LoginModal/LoginModal';
 import '../../components/LoginModal/LoginModal.css';
-import Navbar from '../../components/Navbar/Navbar';
 
 const Frontpage = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,6 +23,7 @@ const Frontpage = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const timeAutoNext = 7000;
     const timerRef = useRef(null);
+    const navigate = useNavigate();
 
     const showSlider = (type) => {
         const carousel = document.querySelector('.carousel');
@@ -46,7 +47,7 @@ const Frontpage = () => {
         setTimeout(() => {
             carousel.classList.remove('next');
             carousel.classList.remove('prev');
-        }, 1000);
+        }, 800);
     };
 
     const handleNext = () => {
@@ -79,10 +80,10 @@ const Frontpage = () => {
             if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, []);
-
     const handleButtonClick = (action) => {
         if (action === 'SEE MORE') {
-            setShowSeeMoreModal(true);
+            // Naviga alla nuova pagina
+            navigate('/starttotravel');
         } else if (action === 'SUBSCRIBE') {
             setShowLoginModal(true);
         }
@@ -94,7 +95,7 @@ const Frontpage = () => {
         const thumbnailBorder = document.querySelector('.carousel .thumbnail');
         const thumbnailItems = thumbnailBorder.querySelectorAll('.item');
 
-        let timeRunning = 3000;
+        let timeRunning = 2000;
         let timeAutoNext = 8000;
 
         const showSlider = (type) => {
@@ -133,6 +134,7 @@ const Frontpage = () => {
 
     return (
         <div>
+            <Navbar />
             <div className="carousel">
                 <div className="arrows">
                     <button onClick={handlePrev} id="prev">&lt;</button>
@@ -146,10 +148,10 @@ const Frontpage = () => {
                             <div className="title">ROMA</div>
                             <div className="topic">ITALIA</div>
                             <div className="des">
-                                copri Roma, la città eterna dove storia e cultura si intrecciano. Passeggia tra antiche rovine come il Colosseo e il Foro Romano, ammira la maestosità della Basilica di San Pietro e goditi la magia di una città che incanta in ogni angolo.
+                                Scopri Roma, la città eterna dove storia e cultura si intrecciano. Passeggia tra antiche rovine come il Colosseo e il Foro Romano, ammira la maestosità della Basilica di San Pietro e goditi la magia di una città che incanta in ogni angolo.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -164,7 +166,7 @@ const Frontpage = () => {
                                 Kamakura è un'oasi di pace e bellezza in Giappone. Celebre per il Grande Buddha e i templi Zen come il Kotoku-in, è il luogo perfetto per immergersi nella spiritualità e nella serenità della cultura giapponese.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -179,7 +181,7 @@ const Frontpage = () => {
                                 Vivi l'energia di New York, la città che non dorme mai. Dalla Statua della Libertà a Central Park, passando per i grattacieli di Manhattan, questa metropoli è il centro pulsante di cultura, arte e innovazione.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -194,7 +196,7 @@ const Frontpage = () => {
                                 Kyoto è il cuore culturale del Giappone. Famosa per i suoi templi buddisti, come il Kinkaku-ji, e i suoi giardini Zen, la città offre un viaggio nel tempo tra geisha, case da tè tradizionali e paesaggi mozzafiato.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -209,7 +211,7 @@ const Frontpage = () => {
                                 Parigi, la città dell'amore e delle luci, è un capolavoro di bellezza e romanticismo. Visita la Torre Eiffel, passeggia lungo la Senna e immergiti nell'arte del Louvre per vivere un'esperienza indimenticabile.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -224,7 +226,7 @@ const Frontpage = () => {
                                 Londra è una città vibrante dove storia e modernità convivono. Ammira il Big Ben, il Tower Bridge e Buckingham Palace, e goditi l’atmosfera unica dei mercati, dei parchi e dei quartieri cosmopoliti.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -239,7 +241,7 @@ const Frontpage = () => {
                                 Atene, culla della civiltà occidentale, offre un mix di storia antica e vita moderna. Esplora l'Acropoli e il Partenone, passeggia nei vicoli del quartiere Plaka e goditi il tramonto sull'antico Agorà.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -254,7 +256,7 @@ const Frontpage = () => {
                                 Il Taj Mahal, simbolo d'amore eterno, è uno dei monumenti più spettacolari del mondo. Situato ad Agra, in India, incanta i visitatori con la sua architettura in marmo bianco e la sua storia commovente.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -269,7 +271,7 @@ const Frontpage = () => {
                                 San Paolo, cuore pulsante del Brasile, è una metropoli cosmopolita ricca di cultura e diversità. Esplora il quartiere artistico di Vila Madalena, i musei di fama mondiale e assapora la vibrante cucina brasiliana.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
@@ -284,7 +286,7 @@ const Frontpage = () => {
                                 Machu Picchu, la città perduta degli Inca, è un sito archeologico unico nelle Ande con panorami mozzafiato e un profondo legame spirituale.
                             </div>
                             <div className="buttons">
-                                <button onClick={() => handleButtonClick('SEE MORE')}>Registrati</button>
+                                <button onClick={() => handleButtonClick('SEE MORE')}>Perché partire?</button>
                                 <button onClick={() => handleButtonClick('SUBSCRIBE')}>Accedi</button>
                             </div>
                         </div>
