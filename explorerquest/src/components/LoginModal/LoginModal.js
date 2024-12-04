@@ -15,18 +15,17 @@ const LoginModal = ({ onClose }) => {
     const [isRegistering, setIsRegistering] = useState(false);
     const [isFlipped, setIsFlipped] = useState(false);
 
-    const [mouseDownTarget, setMouseDownTarget] = useState(null); // Aggiungi questo stato
+    const [mouseDownTarget, setMouseDownTarget] = useState(null);
 
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
     };
 
     const handleMouseDown = (e) => {
-        setMouseDownTarget(e.target); // Registra l'elemento dove è avvenuto il mousedown
+        setMouseDownTarget(e.target);
     };
 
     const handleMouseUp = (e) => {
-        // Chiudi il modal solo se il mousedown e il mouseup sono sull'overlay
         if (mouseDownTarget === e.target && e.target.classList.contains('login-modal-overlay')) {
             onClose();
         }

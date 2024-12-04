@@ -5,7 +5,6 @@ import './Menu.css';
 const Menu = ({ menuActive, toggleMenu }) => {
     return (
         <>
-            {/* Sidebar Menu */}
             <div className={`hp-menu ${menuActive ? "hp-active" : ""}`}>
                 <ul>
                     <li>
@@ -25,8 +24,6 @@ const Menu = ({ menuActive, toggleMenu }) => {
                     </li>
                 </ul>
             </div>
-
-            {/* Menu Toggle Button */}
             <div className="hp-menu-toggle" onClick={toggleMenu}>
                 <span className="hp-open-menu">☰</span>
                 <span className="hp-close-menu">✖</span>

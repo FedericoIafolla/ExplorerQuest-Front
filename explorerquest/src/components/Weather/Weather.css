@@ -14,11 +14,56 @@ body {
   box-sizing: border-box;
 }
 
-.weather-main form {
+.weather-main .search-form,
+.weather-main .date-form {
   border: 1px solid #5552;
   display: flex;
   border-radius: 30px;
   justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.weather-main .date-form {
+  position: relative;
+}
+
+.weather-main .date-form input[type="date"] {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.weather-main .date-form input[type="date"]::before {
+  content: "GG/MM/YYYY";
+  position: absolute;
+  left: 10px;
+  color: #888;
+  pointer-events: none;
+}
+
+.weather-main .date-form input[type="date"]:focus::before,
+.weather-main .date-form input[type="date"]:valid::before {
+  display: none;
+}
+
+.weather-main .date-form button {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.weather-main .date-form i {
+  font-size: 1.2em;
+  color: #888;
+  cursor: pointer;
 }
 
 .weather-main form input,
@@ -91,13 +136,13 @@ body {
   font-weight: bold;
   font-size: small;
   display: flex;
-  flex-direction: column; /* Impila i contenuti verticalmente */
-  align-items: center; /* Centra i contenuti */
-  text-align: center; /* Centra il testo */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .weather-main ul li span:last-child {
-  white-space: nowrap; /* Evita che il valore vada a capo */
+  white-space: nowrap;
 }
 
 .weather-main li:nth-child(2) {

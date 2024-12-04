@@ -1,34 +1,133 @@
-/* Stile generale per il container */
+:root {
+  --account-purple: #2f192e;
+  --account-purple-light: #30192d;
+  --account-dark-blue: #012677;
+  --account-blue: #5c65c0;
+  --account-skyblue: #00b4fc;
+  --account-light-blue: #005bc5;
+  --account-dark-pink: #f64c57;
+  --account-dark-magenta: #e21b5a;
+  --account-light-green: #61e2c2;
+  --account-light-purple: #d9abff;
+}
+
 .account-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  flex-wrap: wrap;
+  background: #1f1e1e;
 }
 
-/* Stile per l'header */
-.account-header {
+.account-profile-card {
+  background: #111;
+  width: 400px;
+  padding: 3rem;
+  border-radius: 10px;
+  min-height: 400px;
+  color: #fff;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account-profile-pic img {
+  border-radius: 10px;
+}
+
+.account-intro h2 {
+  margin-top: 20px;
+}
+
+.account-intro h4 {
+  background: #1d1d1d;
+  font-weight: 400;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 8px;
+}
+
+.account-social i {
+  font-size: 16px;
+  background-color: #222;
+  margin: 5px;
+  height: 35px;
+  width: 35px;
+  line-height: 35px;
   text-align: center;
-  margin-bottom: 20px;
+  border-radius: 5px;
+  transition: 0.5s;
 }
 
-.account-header h1 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 10px;
+.account-social i:hover {
+  transform: scale(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.account-header p {
-  font-size: 1.2rem;
-  color: #666;
+.account-contact-info {
+  background-color: #1d1d1d;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
 }
 
-/* Stile per il contenuto */
-.account-content {
-  font-size: 1rem;
-  color: #444;
-  line-height: 1.6;
+.account-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 0;
+}
+
+.account-icon {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+  background-color: #111;
+  text-align: center;
+}
+
+.account-download-btn {
+  background: linear-gradient(
+    45deg,
+    var(--account-dark-pink),
+    var(--account-dark-magenta)
+  );
+  color: #fff;
+  padding: 1rem 3rem;
+  border-radius: 30px;
+  border: none;
+}
+
+.account-about {
+  background-color: #111;
+  max-width: 800px;
+  padding: 2rem 3rem;
+  border-radius: 10px;
+}
+
+.account-work {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.account-workbox {
+  display: flex;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.account-desc {
+  width: 75%;
+  color: #555;
+}
+
+.account-desc h3 {
+  color: #f2f2f2;
 }

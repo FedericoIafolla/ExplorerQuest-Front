@@ -1,4 +1,3 @@
-// Funzione per effettuare il login
 export const loginUser = async (username, password) => {
     try {
         const response = await fetch("http://localhost:8080/api/user/login", {
@@ -14,7 +13,7 @@ export const loginUser = async (username, password) => {
         }
 
         const data = await response.json();
-        // Salva il token JWT nel localStorage per l'autenticazione
+
         localStorage.setItem("token", data.token);
         return data;
     } catch (err) {
@@ -22,7 +21,6 @@ export const loginUser = async (username, password) => {
     }
 };
 
-// Funzione per recuperare i dettagli dell'utente autenticato
 export const getUserDetails = async () => {
     const token = localStorage.getItem("token");
 
@@ -49,12 +47,10 @@ export const getUserDetails = async () => {
     }
 };
 
-// Funzione per effettuare il logout
 export const logoutUser = () => {
     localStorage.removeItem("token");
 };
 
-// Funzione per cancellare l'account dell'utente autenticato
 export const deleteUserAccount = async () => {
     const token = localStorage.getItem("token");
 

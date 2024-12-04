@@ -28,7 +28,6 @@
   margin-right: 40px;
 }
 
-/* carousel */
 .landingpage-carousel {
   height: 100vh;
   margin-top: -50px;
@@ -66,9 +65,8 @@
 .landingpage-carousel .landingpage-list .landingpage-item .landingpage-author {
   font-weight: 700;
   letter-spacing: 10px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9),
-    /* Ombra principale per tridimensionalità */ 4px 4px 10px rgba(0, 0, 0, 0.7),
-    /* Ombra più ampia per effetto di profondità */ 1px 1px 2px rgba(0, 0, 0, 1); /* Ombra piccola per definire meglio il bordo */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 4px 4px 10px rgba(0, 0, 0, 0.7),
+    1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 .landingpage-carousel .landingpage-list .landingpage-item .landingpage-title,
@@ -76,9 +74,8 @@
   font-size: 5em;
   font-weight: bold;
   line-height: 1.3em;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9),
-    /* Ombra principale per tridimensionalità */ 4px 4px 10px rgba(0, 0, 0, 0.7),
-    /* Ombra più ampia per effetto di profondità */ 1px 1px 2px rgba(0, 0, 0, 1); /* Ombra piccola per definire meglio il bordo */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 4px 4px 10px rgba(0, 0, 0, 0.7),
+    1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 .landingpage-carousel .landingpage-list .landingpage-item .landingpage-topic {
@@ -127,7 +124,6 @@
   color: #000000;
 }
 
-/* thumbnail */
 .landingpage-thumbnail {
   position: absolute;
   bottom: 50px;
@@ -179,7 +175,6 @@
   font-weight: 300;
 }
 
-/* arrows */
 .landingpage-arrows {
   position: absolute;
   top: 80%;
@@ -209,12 +204,10 @@
   color: #000;
 }
 
-/* animation */
 .landingpage-carousel .landingpage-list .landingpage-item:nth-child(1) {
   z-index: 1;
 }
 
-/* animation text in first item */
 .landingpage-carousel
   .landingpage-list
   .landingpage-item:nth-child(1)
@@ -286,7 +279,6 @@
   animation-delay: 1.8s !important;
 }
 
-/* create animation when next click */
 .landingpage-carousel.landingpage-next
   .landingpage-list
   .landingpage-item:nth-child(1)
@@ -338,7 +330,6 @@
   }
 }
 
-/* running time */
 .landingpage-carousel .landingpage-time {
   position: absolute;
   z-index: 1000;
@@ -363,7 +354,6 @@
   }
 }
 
-/* prev click */
 .landingpage-carousel.landingpage-prev
   .landingpage-list
   .landingpage-item:nth-child(2) {
@@ -398,7 +388,6 @@
   animation: landingpage-showThumbnail 0.5s linear 1 forwards;
 }
 
-/* Always clickable arrows */
 .landingpage-carousel.landingpage-next .landingpage-arrows button,
 .landingpage-carousel.landingpage-prev .landingpage-arrows button {
   pointer-events: auto;
@@ -446,13 +435,21 @@
     .landingpage-item
     .landingpage-content {
     padding-right: 0;
+    margin-top: -25px;
   }
   .landingpage-carousel
     .landingpage-list
     .landingpage-item
     .landingpage-content
     .landingpage-title {
-    font-size: 30px;
+    font-size: 4em;
+  }
+  .landingpage-carousel .landingpage-list .landingpage-item .landingpage-topic {
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 1.3em;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 4px 4px 10px rgba(0, 0, 0, 0.7),
+      1px 1px 2px rgba(0, 0, 0, 1);
   }
 }
 
@@ -461,11 +458,34 @@
   .landingpage-item
   .landingpage-content
   .landingpage-des {
-  font-size: 1em; /* Cambia la grandezza del testo */
-  color: #fff; /* Colore del testo */
-  line-height: 1.6; /* Imposta l'altezza della linea per una migliore leggibilità */
+  font-size: 1em;
+  color: #fff;
+  line-height: 1.6;
   font-weight: 500;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9),
-    /* Ombra principale per tridimensionalità */ 4px 4px 10px rgba(0, 0, 0, 0.7),
-    /* Ombra più ampia per effetto di profondità */ 1px 1px 2px rgba(0, 0, 0, 1); /* Ombra piccola per definire meglio il bordo */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 4px 4px 10px rgba(0, 0, 0, 0.7),
+    1px 1px 2px rgba(0, 0, 0, 1);
+}
+
+@media screen and (max-width: 490px) {
+  .landingpage-carousel
+    .landingpage-list
+    .landingpage-item
+    .landingpage-content {
+    padding-right: 0;
+    margin-top: -40px;
+  }
+  .landingpage-carousel
+    .landingpage-list
+    .landingpage-item
+    .landingpage-content
+    .landingpage-title {
+    font-size: 3em;
+  }
+  .landingpage-carousel .landingpage-list .landingpage-item .landingpage-topic {
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1.3em;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 4px 4px 10px rgba(0, 0, 0, 0.7),
+      1px 1px 2px rgba(0, 0, 0, 1);
+  }
 }

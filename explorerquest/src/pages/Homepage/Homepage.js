@@ -6,8 +6,8 @@ import "./Homepage.css";
 
 const Homepage = () => {
     const [menuActive, setMenuActive] = useState(false);
-    const [days, setDays] = useState(1); // Stato per il numero di giorni selezionati
-    const [tripName, setTripName] = useState(""); // Stato per il nome del viaggio
+    const [days, setDays] = useState(1);
+    const [tripName, setTripName] = useState("");
     const navigate = useNavigate();
 
     const toggleMenu = () => {
@@ -51,7 +51,7 @@ const Homepage = () => {
     }, []);
 
     const navigateToItinerary = () => {
-        navigate("/itinerary", { state: { days, tripName } }); // Passa numero di giorni e nome del viaggio come stato
+        navigate("/itinerary", { state: { days, tripName } });
     };
 
     return (
@@ -73,7 +73,7 @@ const Homepage = () => {
                         visione.
                     </div>
                     <div className="hp-buttons">
-                        <button className="hp-button" id="hp-scroll-button">
+                        <button className="hp-button1" id="hp-scroll-button">
                             INIZIA A ESPLORARE
                         </button>
                     </div>

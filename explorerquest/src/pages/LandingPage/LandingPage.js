@@ -19,7 +19,7 @@ const LandingPage = () => {
         let clickTimeout = false;
 
         const showSlider = (type) => {
-            clearInterval(autoNext); // Clear timer immediately on user interaction
+            clearInterval(autoNext);
 
             const sliderItems = slider.querySelectorAll('.landingpage-carousel .landingpage-list .landingpage-item');
             const thumbnailItems = document.querySelectorAll('.landingpage-carousel .landingpage-thumbnail .landingpage-item');
@@ -55,7 +55,7 @@ const LandingPage = () => {
             showSlider('next');
             setTimeout(() => {
                 clickTimeout = false;
-            }, 1800); // Imposta un timeout breve tra i click
+            }, 1800);
         };
 
         prevButton.onclick = () => {
@@ -64,7 +64,7 @@ const LandingPage = () => {
             showSlider('prev');
             setTimeout(() => {
                 clickTimeout = false;
-            }, 200); // Imposta un timeout breve tra i click
+            }, 200);
         };
 
         autoNext = setInterval(() => {
@@ -102,10 +102,7 @@ const LandingPage = () => {
             <header className="landingpage-header">
 
             </header>
-
-            {/* carousel */}
             <div className="landingpage-carousel">
-                {/* list item */}
                 <div className="landingpage-list">
                     {initialCityOrder.map((city, index) => (
                         <div className="landingpage-item" key={index}>
@@ -125,8 +122,6 @@ const LandingPage = () => {
                         </div>
                     ))}
                 </div>
-
-                {/* list thumbnail */}
                 <div className="landingpage-thumbnail">
                     {initialCityOrder.slice(1).concat(initialCityOrder[0]).map((city, index) => (
                         <div className="landingpage-item" key={index}>
@@ -138,8 +133,6 @@ const LandingPage = () => {
                         </div>
                     ))}
                 </div>
-
-                {/* next prev */}
                 <div className="landingpage-arrows">
                     <button id="landingpage-prev">&lt;</button>
                     <button id="landingpage-next">&gt;</button>

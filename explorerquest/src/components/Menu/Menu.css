@@ -1,4 +1,3 @@
-/* Menu Styles */
 .hp-menu {
   position: fixed;
   top: 0;
@@ -39,7 +38,6 @@
   color: #66eeb3;
 }
 
-/* Menu Toggle Button */
 .hp-menu-toggle {
   position: fixed;
   top: 20px;
@@ -52,32 +50,27 @@
   color: #fff;
 }
 
-/* Default icon style */
 .hp-menu-toggle span {
   font-size: 30px;
   color: #fff;
   transition: opacity 0.3s ease;
 }
 
-/* Hamburger icon */
 .hp-menu-toggle .hp-open-menu {
   display: block;
   opacity: 1;
 }
 
-/* Hide hamburger icon when menu is active */
 .hp-menu.hp-active ~ .hp-menu-toggle .hp-open-menu {
   display: none;
   opacity: 0;
 }
 
-/* Close icon */
 .hp-menu-toggle .hp-close-menu {
   display: none;
   opacity: 0;
 }
 
-/* Show close icon when menu is active */
 .hp-menu.hp-active ~ .hp-menu-toggle .hp-close-menu {
   display: block;
   opacity: 1;

@@ -28,6 +28,7 @@
   --col-gap: 2rem;
   --row-gap: 1rem;
   --line-w: 0.25rem;
+  --total-items: 20; /* Valore predefinito, che verrà aggiornato dinamicamente */
   display: grid;
   grid-template-columns: var(--line-w) 1fr;
   grid-auto-columns: max-content;
@@ -43,7 +44,7 @@
 .itinerary-list::before {
   content: "";
   grid-column: 1;
-  grid-row: 1 / span 20;
+  grid-row: 1 / span var(--total-items); /* Usa una variabile dinamica per determinare la lunghezza della linea */
   background: rgb(225, 225, 225);
   border-radius: calc(var(--line-w) / 2);
 }
@@ -267,12 +268,7 @@
 .itinerary-bottom-bar button svg {
   width: 24px;
   height: 24px;
-  color: #555;
   transition: color 0.2s ease;
-}
-
-.itinerary-bottom-bar button:hover svg {
-  color: #007bff;
 }
 
 .itinerary-bottom-bar button span {
@@ -356,4 +352,33 @@
   .itinerary-bottom-bar {
     display: none;
   }
+}
+
+.itinerary-bottom-bar button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.itinerary-bottom-bar button:hover {
+  transform: scale(1.2);
+}
+
+.itinerary-bottom-bar button:active {
+  transform: scale(1.4);
+}
+
+.itinerary-bottom-bar button svg {
+  transition: color 0.3s ease;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }

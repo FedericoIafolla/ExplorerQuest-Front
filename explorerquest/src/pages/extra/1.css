@@ -168,9 +168,6 @@ svg path {
   }
 }
 
-/* Media Queries */
-
-/* Smartphone (max-width: 767px) */
 @media screen and (max-width: 767px) {
   .homepage-header-info h1 {
     font-size: 30px;
@@ -191,7 +188,6 @@ svg path {
   }
 }
 
-/* Tablet (min-width: 768px) and (max-width: 1024px) */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .homepage-header-info h1 {
     font-size: 35px;
@@ -210,7 +206,6 @@ svg path {
   }
 }
 
-/* Large screens (min-width: 1025px) */
 @media screen and (min-width: 1025px) {
   .homepage-header-info h1 {
     font-size: 50px;
