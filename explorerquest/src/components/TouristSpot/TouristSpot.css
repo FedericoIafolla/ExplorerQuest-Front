@@ -17,11 +17,63 @@ body {
   align-items: center;
 }
 
-.tourist-spot__placeholder {
+.tourist-spot__content {
   text-align: center;
 }
 
 .tourist-spot__title {
   font-size: 1.5em;
   color: #333;
+  margin-bottom: 20px;
+}
+
+.tourist-spot__search {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tourist-spot__input {
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+
+.tourist-spot__select {
+  padding: 15px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+
+.tourist-spot__button {
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.tourist-spot__results {
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.tourist-spot__result {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.tourist-spot__name {
+  font-weight: bold;
+}
+
+.tourist-spot__rating {
+  font-size: 0.9em;
+  color: #666;
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Weather from '../../components/Weather/Weather';
 import TouristSpot from '../../components/TouristSpot/TouristSpot';
+import Navbar from '../../components/Navbar/Navbar'; // Import della Navbar
 import './Itinerary.css';
 
 const Itinerary = () => {
@@ -13,6 +14,27 @@ const Itinerary = () => {
     const [items, setItems] = useState([]);
     const [showWeatherModal, setShowWeatherModal] = useState(false);
     const [showTouristSpotModal, setShowTouristSpotModal] = useState(false);
+    const [menuActive, setMenuActive] = useState(false); // Stato per il menu
+    const [isNavbarVisible, setIsNavbarVisible] = useState(false); // Stato per la visibilità della navbar
+
+    // Funzione per attivare/disattivare il menu
+    const toggleMenu = () => {
+        setMenuActive((prev) => !prev);
+    };
+
+    // Effetto per aggiornare la visibilità della navbar in base alla larghezza dello schermo
+    useEffect(() => {
+        const updateNavbarVisibility = () => {
+            setIsNavbarVisible(window.innerWidth >= 1627);
+        };
+
+        updateNavbarVisibility(); // Verifica iniziale
+        window.addEventListener('resize', updateNavbarVisibility);
+
+        return () => {
+            window.removeEventListener('resize', updateNavbarVisibility);
+        };
+    }, []);
 
     useEffect(() => {
         const initialItems = Array.from({ length: initialDays }, (_, index) => ({
@@ -49,6 +71,9 @@ const Itinerary = () => {
         ]);
     };
 
+    const deleteDay = (index) => {
+        setItems((prevItems) => prevItems.filter((_, i) => i !== index));
+    };
 
     const closeModal = (e, setShowModal) => {
         if (e.target.classList.contains('modal-overlay')) {
@@ -58,6 +83,9 @@ const Itinerary = () => {
 
     return (
         <div className="itinerary-container">
+            {/* Navbar visibile solo da 1627px in su */}
+            {isNavbarVisible && <Navbar />}
+
             {showWeatherModal && (
                 <div className="modal-overlay" onClick={(e) => closeModal(e, setShowWeatherModal)}>
                     <Weather />
@@ -70,6 +98,15 @@ const Itinerary = () => {
                 </div>
             )}
 
+            <div className="itinerary-sticky-modals">
+                <div className="itinerary-left-modal">
+                    <Weather />
+                </div>
+                <div className="itinerary-right-modal">
+                    <TouristSpot />
+                </div>
+            </div>
+
             <h1 className="itinerary-title">{tripName}</h1>
             <ul className="itinerary-list">
                 {items.map((item, index) => (
@@ -80,7 +117,16 @@ const Itinerary = () => {
                             '--accent-color': ['#41516C', '#FBCA3E', '#E24A68', '#1B5F8C', '#4CADAD'][index % 5],
                         }}
                     >
-                        <div className="itinerary-date">Giorno {index + 1}</div>
+                        <div className="itinerary-date">
+                            Giorno {index + 1}
+                            <button
+                                className="delete-day-button"
+                                onClick={() => deleteDay(index)}
+                                aria-label={`Elimina giorno ${index + 1}`}
+                            >
+                                ✖
+                            </button>
+                        </div>
                         <input
                             type="text"
                             className="itinerary-title-input"
@@ -120,7 +166,7 @@ const Itinerary = () => {
                     </button>
                     <button
                         type="button"
-                        onClick={addDay} // Chiama la funzione per aggiungere un giorno
+                        onClick={addDay}
                         className="itinerary-inline-flex itinerary-flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                     >
                         <svg className="itinerary-icon w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">

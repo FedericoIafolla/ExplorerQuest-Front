@@ -348,12 +348,6 @@
   align-items: center;
 }
 
-@media (min-width: 1628px) {
-  .itinerary-bottom-bar {
-    display: none;
-  }
-}
-
 .itinerary-bottom-bar button {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -381,4 +375,51 @@
   justify-content: center;
   align-items: center;
   z-index: 9999;
+}
+
+@media (min-width: 1628px) {
+  .itinerary-sticky-modals {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+
+  .itinerary-bottom-bar {
+    display: none;
+  }
+
+  .itinerary-left-modal {
+    margin-left: 2rem;
+  }
+
+  .itinerary-right-modal {
+    margin-right: 2rem;
+  }
+}
+
+.delete-day-button {
+  position: absolute;
+  left: 7.5rem; /* Posiziona la X a sinistra della data */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #e24a68;
+  cursor: pointer;
+  opacity: 0; /* Nascondi per default */
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.delete-day-button:hover {
+  color: #d11a44; /* Cambia colore al passaggio del mouse */
+  transform: translateY(-50%) scale(1.2); /* Effetto hover */
+}
+
+.itinerary-date:hover .delete-day-button {
+  opacity: 1; /* Mostra il pulsante */
 }
