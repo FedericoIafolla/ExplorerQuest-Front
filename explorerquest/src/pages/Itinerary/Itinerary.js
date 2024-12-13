@@ -117,35 +117,30 @@ const Itinerary = () => {
             return;
         }
 
-        // Nascondi temporaneamente elementi non necessari
         const bottomBar = document.querySelector(".itinerary-bottom-bar");
         if (bottomBar) bottomBar.style.display = "none";
 
         try {
-            // Crea un canvas del contenuto
             const canvas = await html2canvas(timelineElement, {
                 scale: 3,
-                useCORS: true, // Include risorse esterne
+                useCORS: true,
                 scrollX: -window.scrollX,
                 scrollY: -window.scrollY,
             });
             const imgData = canvas.toDataURL("image/png");
 
-            // Configura il PDF
             const pdf = new jsPDF("p", "mm", "a4");
-            const imgWidth = 210; // Larghezza pagina A4
-            const pageHeight = 297; // Altezza pagina A4
+            const imgWidth = 210;
+            const pageHeight = 297;
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
             let heightLeft = imgHeight;
             let position = 0;
 
-            // Imposta lo sfondo del PDF
-            pdf.setFillColor("#201f1f"); // Colore di sfondo (adatta al colore del sito)
-            pdf.rect(0, 0, imgWidth, pageHeight, "F"); // Riempie tutta la pagina
+            pdf.setFillColor("#201f1f");
+            pdf.rect(0, 0, imgWidth, pageHeight, "F");
 
-            // Aggiunge l'immagine del canvas
-            const adjustedHeight = Math.min(imgHeight, pageHeight - 40); // Considera margini e titolo
+            const adjustedHeight = Math.min(imgHeight, pageHeight - 40);
             pdf.addImage(imgData, "PNG", 0, 30, imgWidth, adjustedHeight);
             heightLeft -= pageHeight;
 
@@ -162,7 +157,6 @@ const Itinerary = () => {
         } catch (error) {
             console.error("Errore durante la generazione del PDF:", error);
         } finally {
-            // Ripristina la visibilità della bottom bar
             if (bottomBar) bottomBar.style.display = "flex";
         }
     };
