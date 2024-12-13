@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import "./TouristSpot.css";
 
 const TouristSpot = () => {
@@ -52,7 +54,6 @@ const TouristSpot = () => {
     };
 
     const handleDragStart = (event, spot) => {
-
         event.dataTransfer.setData("spot", JSON.stringify(spot));
     };
 
@@ -63,6 +64,38 @@ const TouristSpot = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         handleSearch();
+    };
+
+    const handleSavePdf = async () => {
+        const element = document.querySelector(".TouristSpot-spots-container");
+
+        if (!element) {
+            alert("Nessun contenuto da salvare!");
+            return;
+        }
+
+        const canvas = await html2canvas(element);
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF();
+        const imgWidth = 190; // Larghezza immagine in mm per il formato A4
+        const pageHeight = 297; // Altezza pagina in mm per il formato A4
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+
+        let position = 10;
+
+        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft > 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+
+        pdf.save("timeline.pdf");
     };
 
     return (
@@ -94,7 +127,6 @@ const TouristSpot = () => {
                             draggable
                             onDragStart={(event) => handleDragStart(event, spot)}
                         >
-
                             {getLocalizedValue(spot.properties?.name) && (
                                 <h3>{getLocalizedValue(spot.properties.name, "Nome non disponibile")}</h3>
                             )}
@@ -116,6 +148,9 @@ const TouristSpot = () => {
                     !loading && <p className="TouristSpot-no-results-message">Inserisci una località e ti mostrerò le principali attrazioni!</p>
                 )}
             </div>
+            <button onClick={handleSavePdf} className="TouristSpot-save-btn">
+                Salva come PDF
+            </button>
         </div>
     );
 };

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 // Pagine principali
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -8,18 +8,29 @@ import Account from './pages/Account/Account';
 import Homepage from './pages/Homepage/Homepage';
 import Itinerary from './pages/Itinerary/Itinerary';
 
-// Componenti comuni
+
 import LoginModal from './components/LoginModal/LoginModal';
+import Spinner from './components/Spinner/Spinner';
 
 const App = () => {
-  const [menuActive, setMenuActive] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuActive((prev) => !prev);
+  const usePageLoader = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+      setLoading(true);
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+
+      return () => clearTimeout(timeout);
+    }, [location]);
   };
 
   return (
     <Router>
+      <Spinner loading={loading} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginModal />} />
