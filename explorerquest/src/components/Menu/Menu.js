@@ -6,7 +6,7 @@ const Menu = ({ menuActive, toggleMenu }) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleCommunityClick = (e) => {
-        e.preventDefault(); // Impedisce il comportamento predefinito del link
+        e.preventDefault();
         setShowModal(true);
     };
 

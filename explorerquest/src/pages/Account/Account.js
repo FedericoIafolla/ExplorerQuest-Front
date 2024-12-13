@@ -1,108 +1,221 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Account.css';
 import avatar from '../../assets/AldoBaglio.jpg';
 
 const Account = () => {
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [bio, setBio] = useState(`Sono Aldo Baglio, attore e comico italiano, noto per far parte dello storico trio comico Aldo, Giovanni & Giacomo.
+
+Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creatività in ogni mio lavoro. La mia passione è creare connessione con il pubblico attraverso la risata e la narrazione.`);
+
+    const [workDescriptions, setWorkDescriptions] = useState({
+        comico: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
+        attore: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
+        obiettivi: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
+        sogni: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.'
+    });
+
+    const [phone, setPhone] = useState('+123 456 789');
+    const [location, setLocation] = useState('Palermo, Italia');
+    const [role, setRole] = useState('Comico');
+    const [email, setEmail] = useState('Caricamento in corso...'); // Email dinamica con valore predefinito
+
+    const bioRef = useRef(null);
+    const workRefs = {
+        comico: useRef(null),
+        attore: useRef(null),
+        obiettivi: useRef(null),
+        sogni: useRef(null),
+    };
+
+    const phoneRef = useRef(null);
+    const locationRef = useRef(null);
+    const roleRef = useRef(null);
+
+    const loadUserData = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Token non presente. Eseguire il login.');
+            setEmail('Token non trovato. Eseguire il login.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setEmail(data.email || 'Email non disponibile');
+            } else {
+                const errorDetails = await response.json();
+                console.error('Errore nel caricamento dei dati utente:', errorDetails);
+                setEmail('Errore nel caricamento dei dati utente');
+            }
+        } catch (error) {
+            console.error('Errore di rete:', error);
+            setEmail('Errore di rete');
+        }
+    };
+
+    useEffect(() => {
+        loadUserData();
+    }, []);
+
+    const handleEditToggle = () => {
+        setIsEditing(!isEditing);
+    };
+
+    const handleSave = () => {
+        const newBio = bioRef.current.innerText;
+        const newWorkDescriptions = {
+            comico: workRefs.comico.current.innerText,
+            attore: workRefs.attore.current.innerText,
+            obiettivi: workRefs.obiettivi.current.innerText,
+            sogni: workRefs.sogni.current.innerText,
+        };
+
+        const newPhone = phoneRef.current.innerText;
+        const newLocation = locationRef.current.innerText;
+        const newRole = roleRef.current.innerText;
+
+        setBio(newBio);
+        setWorkDescriptions(newWorkDescriptions);
+        setPhone(newPhone);
+        setLocation(newLocation);
+        setRole(newRole);
+        setIsEditing(false);
+    };
+
     return (
-        <div className="account-container">
-            {/* Profile Card */}
-            <div className="account-profile-card">
-                <div className="account-profile-pic">
+        <div className="acc-container">
+            <div className="acc-profile-card">
+                <div className="acc-profile-pic">
                     <img src={avatar} alt="user avatar" />
                 </div>
 
-                <div className="account-profile-details">
-                    <div className="account-intro">
-                        <h2>Aldo Baglio</h2>
-                        <h4>Comico</h4>
-                        <div className="account-social">
-                            <a href="#"><i className="fab fa-facebook" style={{ color: 'var(--account-blue)' }}></i></a>
-                            <a href="#"><i className="fab fa-twitter" style={{ color: 'var(--account-skyblue)' }}></i></a>
-                            <a href="#"><i className="fab fa-dribbble" style={{ color: 'var(--account-dark-pink)' }}></i></a>
-                            <a href="#"><i className="fab fa-linkedin" style={{ color: 'var(--account-light-blue)' }}></i></a>
-                        </div>
+                <div className="acc-profile-details">
+                    <div className="acc-intro">
+                        {isEditing ? (
+                            <div
+                                className="acc-editable-text"
+                                contentEditable="true"
+                                ref={roleRef}
+                                suppressContentEditableWarning={true}
+                            >
+                                {role}
+                            </div>
+                        ) : (
+                            <h4>{role}</h4>
+                        )}
                     </div>
-
-                    <div className="account-contact-info">
-                        <div className="account-row">
-                            <div className="account-icon">
-                                <i className="fa fa-phone" style={{ color: 'var(--account-dark-magenta)' }}></i>
+                    <div className="acc-contact-info">
+                        <div className="acc-row">
+                            <div className="acc-icon">
+                                <i className="fa fa-phone" style={{ color: 'var(--acc-dark-magenta)' }}></i>
                             </div>
-                            <div className="account-content">
+                            <div className="acc-content">
                                 <span>Phone</span>
-                                <h5>+123 456 789</h5>
+                                {isEditing ? (
+                                    <div
+                                        className="acc-editable-text"
+                                        contentEditable="true"
+                                        ref={phoneRef}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {phone}
+                                    </div>
+                                ) : (
+                                    <h5>{phone}</h5>
+                                )}
                             </div>
                         </div>
 
-                        <div className="account-row">
-                            <div className="account-icon">
-                                <i className="fa fa-envelope-open" style={{ color: 'var(--account-light-green)' }}></i>
+                        <div className="acc-row">
+                            <div className="acc-icon">
+                                <i className="fa fa-envelope-open" style={{ color: 'var(--acc-light-green)' }}></i>
                             </div>
-                            <div className="account-content">
+                            <div className="acc-content">
                                 <span>Email</span>
-                                <h5>aldobaglio@gmail.com</h5>
+                                <h5>{email}</h5>
                             </div>
                         </div>
 
-                        <div className="account-row">
-                            <div className="account-icon">
-                                <i className="fa fa-map-marker" style={{ color: 'var(--account-light-purple)' }}></i>
+                        <div className="acc-row">
+                            <div className="acc-icon">
+                                <i className="fa fa-map-marker" style={{ color: 'var(--acc-light-purple)' }}></i>
                             </div>
-                            <div className="account-content">
+                            <div className="acc-content">
                                 <span>Location</span>
-                                <h5>Palermo, Italia</h5>
+                                {isEditing ? (
+                                    <div
+                                        className="acc-editable-text"
+                                        contentEditable="true"
+                                        ref={locationRef}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {location}
+                                    </div>
+                                ) : (
+                                    <h5>{location}</h5>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* About Section */}
-            <div className="account-about">
-                <h1>Chi sono?</h1>
-                <p>
-                    Sono Aldo Baglio, attore e comico italiano, noto per far parte dello storico trio comico Aldo, Giovanni & Giacomo.
-                </p>
-                <p>
-                    Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creatività in ogni mio lavoro. La mia passione è creare connessione con il pubblico attraverso la risata e la narrazione.
-                </p>
+            <div className="acc-about">
+                <div className="acc-about-header">
+                    <h1>Chi sono?</h1>
+                </div>
+                <div className="acc-bio-section">
+                    {isEditing ? (
+                        <div
+                            className="acc-editable-text"
+                            contentEditable="true"
+                            ref={bioRef}
+                            suppressContentEditableWarning={true}
+                        >
+                            {bio}
+                        </div>
+                    ) : (
+                        <p>{bio}</p>
+                    )}
+                </div>
                 <h2>Cosa faccio?</h2>
-                <div className="account-work">
-                    <div className="account-workbox">
-                        <div className="account-icon">
+                <div className="acc-work">
+                    {Object.keys(workDescriptions).map((key) => (
+                        <div className="acc-workbox" key={key}>
+                            <div className="acc-desc">
+                                <h3>{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
+                                {isEditing ? (
+                                    <div
+                                        className="acc-editable-text"
+                                        contentEditable="true"
+                                        ref={workRefs[key]}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {workDescriptions[key]}
+                                    </div>
+                                ) : (
+                                    <p>{workDescriptions[key]}</p>
+                                )}
+                            </div>
                         </div>
-                        <div className="account-desc">
-                            <h3>Comico</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.</p>
-                        </div>
-                    </div>
+                    ))}
+                </div>
 
-                    <div className="account-workbox">
-                        <div className="account-icon">
-                        </div>
-                        <div className="account-desc">
-                            <h3>Attore</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.</p>
-                        </div>
-                    </div>
-
-                    <div className="account-workbox">
-                        <div className="account-icon">
-                        </div>
-                        <div className="account-desc">
-                            <h3>Obiettivi</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.</p>
-                        </div>
-                    </div>
-
-                    <div className="account-workbox">
-                        <div className="account-icon">
-                        </div>
-                        <div className="account-desc">
-                            <h3>Sogni</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.</p>
-                        </div>
-                    </div>
+                <div style={{ marginTop: '2rem' }}>
+                    {!isEditing ? (
+                        <button className="acc-button" onClick={handleEditToggle}>Modifica profilo</button>
+                    ) : (
+                        <button className="acc-button" onClick={handleSave}>Salva modifiche</button>
+                    )}
                 </div>
             </div>
         </div>

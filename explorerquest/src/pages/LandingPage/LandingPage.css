@@ -101,7 +101,7 @@
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   transition: transform 0.3s, background-color 0.3s;
-  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.7); /* Effetto tridimensionale */
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.7);
 }
 
 .landingpage-carousel
@@ -154,9 +154,9 @@
   bottom: 10px;
   left: 10px;
   right: 10px;
-  font-size: 1em; /* Cambia la grandezza del testo */
+  font-size: 1em;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 4px 4px 10px rgba(0, 0, 0, 0.7),
-    1px 1px 2px rgba(0, 0, 0, 1); /* Ombra tridimensionale */
+    1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 .landingpage-thumbnail
@@ -165,7 +165,7 @@
   .landingpage-title {
   font-weight: 700;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 4px 4px 10px rgba(0, 0, 0, 0.7),
-    1px 1px 2px rgba(0, 0, 0, 1); /* Ombra tridimensionale per il titolo */
+    1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 .landingpage-thumbnail

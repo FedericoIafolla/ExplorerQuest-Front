@@ -41,12 +41,12 @@ const LoginModal = ({ onClose }) => {
         }
 
         const payload = isRegistering
-            ? { username: username, email: email, password: password }
-            : { usernameOrEmail: usernameOrEmail, password: password };
+            ? { username, email, password }
+            : { username: usernameOrEmail, password };
 
         const url = isRegistering
-            ? "http://localhost:8080/api/user/register"
-            : "http://localhost:8080/api/user/login";
+            ? "http://localhost:8080/api/auth/register"
+            : "http://localhost:8080/api/auth/login";
 
         try {
             const response = await fetch(url, {
@@ -59,22 +59,21 @@ const LoginModal = ({ onClose }) => {
 
             if (response.ok) {
                 const data = await response.json();
-                if (!isRegistering) {
-                    localStorage.setItem("token", data.token);
-                    navigate('/homepage');
-                    onClose();
-                } else {
+                if (isRegistering) {
+                    alert('Registrazione completata! Ora puoi effettuare il login.');
                     setIsRegistering(false);
                     setUsername('');
                     setEmail('');
                     setPassword('');
                     setConfirmPassword('');
-                    alert('Registrazione avvenuta con successo! Ora puoi effettuare il login.');
+                } else {
+                    localStorage.setItem('token', data.token);
                     navigate('/homepage');
+                    onClose();
                 }
             } else {
-                const error = await response.text();
-                setErrorMessage(`${isRegistering ? "Registrazione" : "Login"} fallito: ${error}`);
+                const error = await response.json();
+                setErrorMessage(`${isRegistering ? 'Registrazione' : 'Login'} fallito: ${error.message || error}`);
             }
         } catch (error) {
             setErrorMessage(`Errore di connessione: ${error.message}`);
@@ -194,16 +193,6 @@ const LoginModal = ({ onClose }) => {
                                     id="confirm-eye"
                                     onClick={togglePasswordVisibility}
                                 ></i>
-                            </div>
-                        </div>
-                    )}
-                    {!isRegistering && (
-                        <div className="login__socials">
-                            <p>Or login with:</p>
-                            <div className="login__social-icons">
-                                <i className="ri-google-line login__social-icon" title="Login with Google"></i>
-                                <i className="ri-facebook-circle-line login__social-icon" title="Login with Facebook"></i>
-                                <i className="ri-twitter-line login__social-icon" title="Login with Twitter"></i>
                             </div>
                         </div>
                     )}

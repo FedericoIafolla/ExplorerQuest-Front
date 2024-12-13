@@ -2,7 +2,7 @@ header {
   width: 100%;
   max-width: 1140px;
   margin: auto;
-  height: 30px;
+  height: 20px;
   display: flex;
   padding-top: 30px;
   align-items: center;
@@ -25,9 +25,9 @@ nav a,
   transition: font-size 0.5s ease;
   -webkit-text-stroke: 0.5px black;
   text-decoration: none;
-  background: none; /* Per rimuovere lo stile di default del pulsante */
-  border: none; /* Per rimuovere il bordo di default */
-  cursor: pointer; /* Per far apparire il cursore come nei link */
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 nav a:hover,
@@ -36,7 +36,7 @@ nav a:hover,
 }
 
 .navbar-button:focus {
-  outline: none; /* Rimuove il bordo di focus */
+  outline: none;
 }
 
 @media screen and (max-width: 768px) {

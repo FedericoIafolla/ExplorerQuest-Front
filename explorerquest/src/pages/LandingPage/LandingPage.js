@@ -115,8 +115,8 @@ const LandingPage = () => {
                                     {cityDescriptions[city]}
                                 </div>
                                 <div className="landingpage-buttons">
-                                    <button>SEE MORE</button>
-                                    <button onClick={openModal} className="landingpage-subscribe-button">SUBSCRIBE</button>
+                                    <button>Scopri</button>
+                                    <button onClick={openModal} className="landingpage-subscribe-button">Accedi</button>
                                 </div>
                             </div>
                         </div>

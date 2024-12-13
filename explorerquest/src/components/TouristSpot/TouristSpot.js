@@ -1,67 +1,122 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './TouristSpot.css';
+import React, { useState } from "react";
+import "./TouristSpot.css";
 
 const TouristSpot = () => {
-    const [location, setLocation] = useState('');
-    const [type, setType] = useState('attractions');
-    const [results, setResults] = useState([]);
+    const [city, setCity] = useState("");
+    const [spots, setSpots] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleSearch = async () => {
+        if (!city.trim()) {
+            alert("Per favore, inserisci il nome di una città!");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Devi effettuare il login per cercare punti di interesse.");
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
         try {
-            const response = await axios.post('https://travel-advisor.p.rapidapi.com/locations/v2/list-nearby', {
-                params: {
-                    query: location,
-                    lang: 'en_US',
-                    units: 'km'
+            const response = await fetch(
+                `http://localhost:8080/api/itineraries/search?city=${city}&lang=it`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
-            }, {
-                headers: {
-                    'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
-                    'X-RapidAPI-Key': '95a50cb7f9msh9a6170f7b8a25eap1dc406jsn1dade804b894'
+            );
+
+            if (!response.ok) {
+                if (response.status === 401) {
+                    throw new Error("Non autorizzato. Effettua nuovamente il login.");
                 }
-            });
-            setResults(response.data.data.filter(item => item.category.key === type));
+                throw new Error("Errore durante il recupero dei punti di interesse.");
+            }
+
+            const data = await response.json();
+            setSpots(data.features || []);
         } catch (error) {
-            console.error('Error fetching data', error);
+            console.error("Errore durante il recupero dei punti di interesse:", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
+    const handleDragStart = (event, spot) => {
+
+        event.dataTransfer.setData("spot", JSON.stringify(spot));
+    };
+
+    const getLocalizedValue = (property, fallback) => {
+        return property?.["it"] || property || fallback;
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        handleSearch();
+    };
+
     return (
-        <main className="tourist-spot__main">
-            <section className="tourist-spot__content">
-                <h2 className="tourist-spot__title">Attrazioni Turistiche</h2>
-                <div className="tourist-spot__search">
-                    <input
-                        type="text"
-                        placeholder="Inserisci località..."
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        className="tourist-spot__input"
-                    />
-                    <select
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                        className="tourist-spot__select"
-                    >
-                        <option value="attractions">Attrazioni</option>
-                        <option value="restaurants">Ristoranti</option>
-                        <option value="hotels">Hotel</option>
-                    </select>
-                    <button onClick={handleSearch} className="tourist-spot__button">Cerca</button>
-                </div>
-                <div className="tourist-spot__results">
-                    {results.slice(0, 5).map((place) => (
-                        <div key={place.location_id} className="tourist-spot__result">
-                            <p className="tourist-spot__name">{place.name}</p>
-                            {place.rating && (
-                                <p className="tourist-spot__rating">Valutazione: {place.rating}</p>
+        <div className="TouristSpot-modal">
+            <form action="javascript:" className="TouristSpot-search-bar" onSubmit={handleSubmit}>
+                <input
+                    type="search"
+                    name="search"
+                    pattern=".*\S.*"
+                    required
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="TouristSpot-search-input"
+                />
+                <button className="TouristSpot-search-btn" type="submit">
+                    <span>Search</span>
+                </button>
+            </form>
+
+            {loading && <p className="TouristSpot-loading-message">Caricamento in corso...</p>}
+            {error && <p className="TouristSpot-error-message">{error}</p>}
+
+            <div className="TouristSpot-spots-container">
+                {spots.length > 0 ? (
+                    spots.map((spot, index) => (
+                        <div
+                            key={index}
+                            className="TouristSpot-spot-card"
+                            draggable
+                            onDragStart={(event) => handleDragStart(event, spot)}
+                        >
+
+                            {getLocalizedValue(spot.properties?.name) && (
+                                <h3>{getLocalizedValue(spot.properties.name, "Nome non disponibile")}</h3>
+                            )}
+
+                            {getLocalizedValue(spot.properties?.description) && (
+                                <p>
+                                    <strong>Descrizione:</strong> {getLocalizedValue(spot.properties.description)}
+                                </p>
+                            )}
+
+                            {spot.properties?.formatted && (
+                                <p>
+                                    <strong>Indirizzo:</strong> {spot.properties.formatted}
+                                </p>
                             )}
                         </div>
-                    ))}
-                </div>
-            </section>
-        </main>
+                    ))
+                ) : (
+                    !loading && <p className="TouristSpot-no-results-message">Inserisci una località e ti mostrerò le principali attrazioni!</p>
+                )}
+            </div>
+        </div>
     );
 };
 

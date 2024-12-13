@@ -13,7 +13,8 @@ const Weather = () => {
 
     const searchWeather = async (city) => {
         try {
-            const response = await fetch(`${API_URL}&q=${city}`);
+            const cityWithCountry = city.toLowerCase() === 'roma' ? 'Roma, IT' : city;
+            const response = await fetch(`${API_URL}&q=${cityWithCountry}`);
             const data = await response.json();
 
             if (data.cod === 200) {
@@ -28,6 +29,7 @@ const Weather = () => {
             setTimeout(() => setError(false), 1000);
         }
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();

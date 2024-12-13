@@ -1,79 +1,215 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
+.TouristSpot-search-bar input,
+.TouristSpot-search-btn,
+.TouristSpot-search-btn:before,
+.TouristSpot-search-btn:after {
+  transition: all 0.25s ease-out;
 }
-
-.tourist-spot__main {
-  width: 300px;
-  height: max-content;
-  min-height: 300px;
-  background-color: #ececec;
-  border-radius: 30px;
-  box-shadow: 0 30px 50px #5553;
-  padding: 30px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.TouristSpot-search-bar input,
+.TouristSpot-search-btn {
+  width: 3em;
+  height: 3em;
 }
-
-.tourist-spot__content {
-  text-align: center;
-}
-
-.tourist-spot__title {
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.tourist-spot__search {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.tourist-spot__input {
-  padding: 10px;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-}
-
-.tourist-spot__select {
-  padding: 15px;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-}
-
-.tourist-spot__button {
-  padding: 10px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
+.TouristSpot-search-bar input:invalid:not(:focus),
+.TouristSpot-search-btn {
   cursor: pointer;
 }
+.TouristSpot-search-bar,
+.TouristSpot-search-bar input:focus,
+.TouristSpot-search-bar input:valid {
+  width: 100%;
+}
+.TouristSpot-search-bar input:focus,
+.TouristSpot-search-bar input:not(:focus) + .TouristSpot-search-btn:focus {
+  outline: transparent;
+}
+.TouristSpot-search-bar {
+  margin: auto;
+  padding-bottom: 1em;
+  justify-content: center;
+  max-width: 30em;
+  display: flex;
+  align-items: center;
+}
+.TouristSpot-search-bar input {
+  background: transparent;
+  border-radius: 5em;
+  box-shadow: 0 0 0 0.4em #171717 inset;
+  padding: 0.75em;
+  transform: translate(0.5em, 0.5em) scale(0.5);
+  transform-origin: 100% 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.TouristSpot-search-bar input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.TouristSpot-search-bar input:focus,
+.TouristSpot-search-bar input:valid {
+  background: #fff;
+  border-radius: 1.5em 0 0 1.5em;
+  box-shadow: 0 0 0 0.1em #d9d9d9 inset;
+  transform: scale(1);
+}
+.TouristSpot-search-btn {
+  background: #171717;
+  border-radius: 0 0.75em 0.75em 0 / 0 1.5em 1.5em 0;
+  padding: 0.75em;
+  position: relative;
+  transform: translate(0.25em, 0.25em) rotate(45deg) scale(0.25, 0.125);
+  transform-origin: 0 50%;
+  flex-shrink: 0;
+}
+.TouristSpot-search-btn:before,
+.TouristSpot-search-btn:after {
+  content: "";
+  display: block;
+  opacity: 0;
+  position: absolute;
+}
+.TouristSpot-search-btn:before {
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.2em #423f3f inset;
+  top: 0.75em;
+  left: 0.75em;
+  width: 1.2em;
+  height: 1.2em;
+}
+.TouristSpot-search-btn:after {
+  background: #423f3f;
+  border-radius: 0 0.25em 0.25em 0;
+  top: 51%;
+  left: 51%;
+  width: 0.75em;
+  height: 0.25em;
+  transform: translate(0.2em, 0) rotate(45deg);
+  transform-origin: 0 50%;
+}
+.TouristSpot-search-btn span {
+  display: inline-block;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+}
 
-.tourist-spot__results {
-  max-height: 200px;
+/* Active state */
+.TouristSpot-search-bar input:focus + .TouristSpot-search-btn,
+.TouristSpot-search-bar input:valid + .TouristSpot-search-btn {
+  background: #c2c3c5;
+  border-radius: 0 1.5em 1.5em 0;
+  transform: scale(1);
+}
+.TouristSpot-search-bar input:focus + .TouristSpot-search-btn:before,
+.TouristSpot-search-bar input:focus + .TouristSpot-search-btn:after,
+.TouristSpot-search-bar input:valid + .TouristSpot-search-btn:before,
+.TouristSpot-search-bar input:valid + .TouristSpot-search-btn:after {
+  opacity: 1;
+}
+.TouristSpot-search-bar input:focus + .TouristSpot-search-btn:hover,
+.TouristSpot-search-bar input:valid + .TouristSpot-search-btn:hover,
+.TouristSpot-search-bar
+  input:valid:not(:focus)
+  + .TouristSpot-search-btn:focus {
+  background: #c2c3c5;
+}
+.TouristSpot-search-bar input:focus + .TouristSpot-search-btn:active,
+.TouristSpot-search-bar input:valid + .TouristSpot-search-btn:active {
+  transform: translateY(1px);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  body,
+  input {
+    color: #242424;
+  }
+  body {
+    background: #fcfcfc;
+  }
+  .TouristSpot-search-bar input {
+    box-shadow: 0 0 0 0.4em #423f3f inset;
+  }
+  .TouristSpot-search-bar input:focus,
+  .TouristSpot-search-bar input:valid {
+    background: #ffffff;
+    box-shadow: 0 0 0 0.1em #dadada inset;
+  }
+  .TouristSpot-search-btn {
+    background: #423f3f;
+  }
+}
+
+.TouristSpot-modal {
+  width: 100%;
+  max-width: 300px;
+  min-width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.TouristSpot-loading-message,
+.TouristSpot-error-message,
+.TouristSpot-no-results-message {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.TouristSpot-spots-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-height: 400px;
   overflow-y: auto;
+  padding-right: 10px;
+}
+
+.TouristSpot-spots-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.TouristSpot-spots-container::-webkit-scrollbar-thumb {
+  background-color: #c2c3c5;
+  border-radius: 4px;
+}
+
+.TouristSpot-spots-container::-webkit-scrollbar-thumb:hover {
+  background-color: #c2c3c5;
+}
+
+.TouristSpot-spot-card {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  word-wrap: break-word;
+  overflow: hidden;
   text-align: left;
 }
 
-.tourist-spot__result {
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+.TouristSpot-spot-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
 }
 
-.tourist-spot__name {
-  font-weight: bold;
-}
-
-.tourist-spot__rating {
-  font-size: 0.9em;
+.TouristSpot-spot-card p {
+  font-size: 14px;
   color: #666;
+  margin: 5px 0;
+}
+
+.TouristSpot-spot-card a {
+  color: #c2c3c5;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.TouristSpot-spot-card a:hover {
+  text-decoration: underline;
 }
