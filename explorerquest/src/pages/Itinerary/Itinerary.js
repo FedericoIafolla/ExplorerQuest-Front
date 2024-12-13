@@ -81,7 +81,8 @@ const Itinerary = () => {
         event.preventDefault();
         const spot = JSON.parse(event.dataTransfer.getData("spot"));
 
-        const visitText = `Visitare ${spot.properties?.name || "Nome non disponibile"}, ${spot.properties?.formatted || "Indirizzo non disponibile"}.\n`;
+        const visitText = `Visitare ${spot.properties?.name || "Nome non disponibile"}, ${spot.properties?.formatted || "Indirizzo non disponibile"}.
+`;
 
         setItems((prevItems) =>
             prevItems.map((item, i) =>
@@ -108,61 +109,64 @@ const Itinerary = () => {
         }
     };
 
-    const handleSaveAsPDF = async () => {
-        const timelineElement = timelineRef.current;
+    const handleSavePdf = async () => {
+        const timelineElement = document.querySelector(".itinerary-container");
 
-        if (timelineElement) {
-            // Nascondi elementi non necessari
-            const bottomBar = document.querySelector(".itinerary-bottom-bar");
-            if (bottomBar) bottomBar.style.display = "none";
+        if (!timelineElement) {
+            alert("Nessun contenuto da salvare!");
+            return;
+        }
 
-            try {
-                // Crea un canvas dall'elemento timeline
-                const canvas = await html2canvas(timelineElement, {
-                    scale: 3, // Aumenta il valore per una qualità migliore
-                    useCORS: true,
-                    scrollX: -window.scrollX, // Evita problemi con lo scroll
-                    scrollY: -window.scrollY,
-                });
+        // Nascondi temporaneamente elementi non necessari
+        const bottomBar = document.querySelector(".itinerary-bottom-bar");
+        if (bottomBar) bottomBar.style.display = "none";
 
-                const imgData = canvas.toDataURL("image/png");
+        try {
+            // Crea un canvas del contenuto
+            const canvas = await html2canvas(timelineElement, {
+                scale: 3,
+                useCORS: true, // Include risorse esterne
+                scrollX: -window.scrollX,
+                scrollY: -window.scrollY,
+            });
+            const imgData = canvas.toDataURL("image/png");
 
-                // Configura il PDF
-                const pdf = new jsPDF("p", "mm", "a4");
-                const imgWidth = 210; // Larghezza della pagina A4
-                const pageHeight = 297; // Altezza della pagina A4
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            // Configura il PDF
+            const pdf = new jsPDF("p", "mm", "a4");
+            const imgWidth = 210; // Larghezza pagina A4
+            const pageHeight = 297; // Altezza pagina A4
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-                let heightLeft = imgHeight;
-                let position = 0;
+            let heightLeft = imgHeight;
+            let position = 0;
 
-                // Aggiunge pagine al PDF se necessario
+            // Imposta lo sfondo del PDF
+            pdf.setFillColor("#201f1f"); // Colore di sfondo (adatta al colore del sito)
+            pdf.rect(0, 0, imgWidth, pageHeight, "F"); // Riempie tutta la pagina
+
+            // Aggiunge l'immagine del canvas
+            const adjustedHeight = Math.min(imgHeight, pageHeight - 40); // Considera margini e titolo
+            pdf.addImage(imgData, "PNG", 0, 30, imgWidth, adjustedHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft > 0) {
+                pdf.addPage();
+                pdf.setFillColor("#201f1f");
+                pdf.rect(0, 0, imgWidth, pageHeight, "F");
+                position -= pageHeight;
                 pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
                 heightLeft -= pageHeight;
-
-                while (heightLeft > 0) {
-                    position -= pageHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
-
-                // Salva il PDF
-                pdf.save(`${tripName}.pdf`);
-            } catch (error) {
-                console.error("Errore durante la generazione del PDF:", error);
             }
 
-            // Ripristina visibilità della bottom bar
+            pdf.save(`${tripName}_timeline.pdf`);
+        } catch (error) {
+            console.error("Errore durante la generazione del PDF:", error);
+        } finally {
+            // Ripristina la visibilità della bottom bar
             if (bottomBar) bottomBar.style.display = "flex";
         }
     };
 
-
-
-    const handleSave = () => {
-        alert("Itinerario salvato con successo!");
-    };
 
     return (
         <div className="itinerary-container">
@@ -268,6 +272,7 @@ const Itinerary = () => {
                         </svg>
                         <span className="sr-only">Meteo</span>
                     </button>
+
                     <button
                         type="button"
                         onClick={addDay}
@@ -305,7 +310,7 @@ const Itinerary = () => {
                     </button>
                     <button
                         type="button"
-                        onClick={handleSaveAsPDF}
+                        onClick={handleSavePdf}
                         className="itinerary-inline-flex itinerary-flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                     >
                         <svg

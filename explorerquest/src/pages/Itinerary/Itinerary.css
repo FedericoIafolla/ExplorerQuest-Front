@@ -423,3 +423,54 @@
 .itinerary-date:hover .delete-day-button {
   opacity: 1;
 }
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .itinerary-container {
+    background: white;
+    color: black;
+    padding: 2rem;
+  }
+
+  .itinerary-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .itinerary-bottom-bar,
+  .modal-overlay,
+  .itinerary-sticky-modals {
+    display: none !important; /* Nascondi elementi non necessari */
+  }
+
+  .delete-day-button {
+    display: none !important; /* Nascondi pulsanti di eliminazione */
+  }
+
+  .itinerary-item {
+    page-break-inside: avoid; /* Evita la divisione degli elementi */
+  }
+
+  .itinerary-date::before,
+  .itinerary-title::before,
+  .itinerary-descr::before {
+    content: none !important; /* Rimuove effetti decorativi */
+  }
+
+  .itinerary-container {
+    margin: 0 auto;
+    max-width: 800px;
+    box-sizing: border-box;
+  }
+
+  .itinerary-container {
+    padding: 1rem;
+    background-color: #201f1f; /* Sfondo uniforme */
+    color: white;
+  }
+}
