@@ -35,6 +35,8 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
 
     const loadUserData = async () => {
         const token = localStorage.getItem('token');
+        console.log('Token JWT recuperato:', token); // Log per verificare il token
+
         if (!token) {
             console.error('Token non presente. Eseguire il login.');
             setEmail('Token non trovato. Eseguire il login.');
@@ -50,14 +52,14 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('Dati ricevuti:', data); // Log dei dati ricevuti
                 setEmail(data.email || 'Email non disponibile');
             } else {
-                const errorDetails = await response.json();
-                console.error('Errore nel caricamento dei dati utente:', errorDetails);
+                console.error('Errore nella risposta dell\'API:', response.status);
                 setEmail('Errore nel caricamento dei dati utente');
             }
         } catch (error) {
-            console.error('Errore di rete:', error);
+            console.error('Errore durante la chiamata API:', error);
             setEmail('Errore di rete');
         }
     };

@@ -489,3 +489,22 @@
       1px 1px 2px rgba(0, 0, 0, 1);
   }
 }
+
+.landingpage-carousel
+  .landingpage-list
+  .landingpage-item
+  .landingpage-buttons
+  button:nth-child(2) {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #eee;
+  backdrop-filter: blur(10px); /* Aggiungi questa proprietà */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ); /* Aggiungi un colore semi-trasparente */
+  -webkit-text-stroke: 0.6px #000;
+  font-weight: bold;
+}
