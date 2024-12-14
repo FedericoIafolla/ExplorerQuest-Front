@@ -19,7 +19,7 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
     const [phone, setPhone] = useState('+123 456 789');
     const [location, setLocation] = useState('Palermo, Italia');
     const [role, setRole] = useState('Comico');
-    const [email, setEmail] = useState('Caricamento in corso...'); // Email dinamica con valore predefinito
+    const [email, setEmail] = useState('Caricamento in corso...');
 
     const bioRef = useRef(null);
     const workRefs = {
@@ -35,7 +35,7 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
 
     const loadUserData = async () => {
         const token = localStorage.getItem('token');
-        console.log('Token JWT recuperato:', token); // Log per verificare il token
+        console.log('Token JWT recuperato:', token);
 
         if (!token) {
             console.error('Token non presente. Eseguire il login.');
@@ -52,10 +52,12 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Dati ricevuti:', data); // Log dei dati ricevuti
+                console.log('Dati ricevuti:', data);
                 setEmail(data.email || 'Email non disponibile');
             } else {
                 console.error('Errore nella risposta dell\'API:', response.status);
+                const errorText = await response.text();
+                console.error('Dettagli errore:', errorText);
                 setEmail('Errore nel caricamento dei dati utente');
             }
         } catch (error) {
