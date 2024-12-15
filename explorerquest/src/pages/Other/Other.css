@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
 
-.homepage * {
+.other-homepage * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -8,11 +8,11 @@
   list-style: none;
 }
 
-.homepage-body {
+.other-homepage-body {
   font-family: "Montserrat", sans-serif;
 }
 
-.homepage-container {
+.other-homepage-container {
   width: 100%;
   position: relative;
   display: flex;
@@ -20,9 +20,10 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background-color: black;
 }
 
-.homepage-header {
+.other-homepage-header {
   width: 100%;
   height: 100vh;
   position: relative;
@@ -33,11 +34,10 @@
   justify-content: center;
   text-align: center;
   padding: 0 20px;
-  background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: overlay;
 }
 
-.homepage-video {
+.other-homepage-video {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -46,7 +46,7 @@
   z-index: -1;
 }
 
-.homepage-header-info {
+.other-homepage-header-info {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,21 +54,21 @@
   text-align: center;
 }
 
-.homepage-header-info h1 {
+.other-homepage-header-info h1 {
   font-size: 45px;
   text-transform: uppercase;
   padding: 20px 0;
   letter-spacing: 4px;
 }
 
-.homepage-header-info p {
+.other-homepage-header-info p {
   line-height: 30px;
   font-size: 15px;
   width: 80%;
   margin: auto;
 }
 
-.homepage-read-more-link {
+.other-homepage-read-more-link {
   background-color: #fff;
   color: #00a8b4;
   padding: 17px 45px;
@@ -80,18 +80,18 @@
   transition: all 0.5s ease;
 }
 
-.homepage-read-more-link:hover {
+.other-homepage-read-more-link:hover {
   background-color: #00a8b4;
   color: #fff;
 }
 
-#homepage-video {
+#other-homepage-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-#homepage-welcome-text {
+#other-homepage-welcome-text {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,25 +101,25 @@
   margin-top: -200px;
 }
 
-.homepage-container-inner h2 {
+.other-homepage-container-inner h2 {
   color: #343a40;
   font-size: 45px;
   padding-bottom: 12px;
 }
 
-.homepage-container-inner p {
+.other-homepage-container-inner p {
   color: #777;
   font-size: 16px;
 }
 
-.homepage-slides {
+.other-homepage-slides {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 100px;
 }
 
-.homepage-slide {
+.other-homepage-slide {
   width: 60px;
   min-width: 60px;
   height: 300px;
@@ -133,11 +133,11 @@
   justify-content: center;
 }
 
-.homepage-slide:hover {
+.other-homepage-slide:hover {
   min-width: 250px;
 }
 
-.homepage-slide-info {
+.other-homepage-slide-info {
   transform: rotate(-90deg);
   transition: all 0.5s ease;
   font-size: 13px;
@@ -152,10 +152,10 @@ svg path {
   stroke-dasharray: 500;
   stroke-dashoffset: 500;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-  animation: textAnimation 4s ease-in-out 1 forwards;
+  animation: other-textAnimation 4s ease-in-out 1 forwards;
 }
 
-@keyframes textAnimation {
+@keyframes other-textAnimation {
   0% {
     stroke-dashoffset: 500;
   }
@@ -169,49 +169,49 @@ svg path {
 }
 
 @media screen and (max-width: 767px) {
-  .homepage-header-info h1 {
+  .other-homepage-header-info h1 {
     font-size: 30px;
     letter-spacing: 2px;
   }
 
-  .homepage-header-info p {
+  .other-homepage-header-info p {
     font-size: 13px;
     line-height: 25px;
   }
 
-  .homepage-slide {
+  .other-homepage-slide {
     height: 200px;
   }
 
-  .homepage-slide-info {
+  .other-homepage-slide-info {
     font-size: 11px;
   }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .homepage-header-info h1 {
+  .other-homepage-header-info h1 {
     font-size: 35px;
   }
 
-  .homepage-header-info p {
+  .other-homepage-header-info p {
     font-size: 14px;
   }
 
-  .homepage-slide {
+  .other-homepage-slide {
     height: 250px;
   }
 
-  .homepage-slide-info {
+  .other-homepage-slide-info {
     font-size: 12px;
   }
 }
 
 @media screen and (min-width: 1025px) {
-  .homepage-header-info h1 {
+  .other-homepage-header-info h1 {
     font-size: 50px;
   }
 
-  .homepage-header-info p {
+  .other-homepage-header-info p {
     font-size: 16px;
     line-height: 32px;
   }

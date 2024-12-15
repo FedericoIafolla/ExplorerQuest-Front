@@ -14,7 +14,6 @@ const LoginModal = ({ onClose }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const [isFlipped, setIsFlipped] = useState(false);
-
     const [mouseDownTarget, setMouseDownTarget] = useState(null);
 
     const togglePasswordVisibility = () => {
@@ -67,7 +66,7 @@ const LoginModal = ({ onClose }) => {
                     setPassword('');
                     setConfirmPassword('');
                 } else {
-                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('authToken', data.token);
                     navigate('/homepage');
                     onClose();
                 }

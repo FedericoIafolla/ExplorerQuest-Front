@@ -100,7 +100,7 @@
   letter-spacing: 3px;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
-  transition: transform 0.3s, background-color 0.3s;
+  transition: transform 0.3s ease;
   box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.7);
 }
 
@@ -507,4 +507,12 @@
   ); /* Aggiungi un colore semi-trasparente */
   -webkit-text-stroke: 0.6px #000;
   font-weight: bold;
+}
+
+.landingpage-carousel
+  .landingpage-list
+  .landingpage-item
+  .landingpage-buttons
+  button:hover {
+  transform: scale(1.05); /* Ingrandimento al passaggio del mouse */
 }

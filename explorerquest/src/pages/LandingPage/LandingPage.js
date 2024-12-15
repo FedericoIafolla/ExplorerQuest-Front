@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './LandingPage.css';
 import LoginModal from '../../components/LoginModal/LoginModal';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const nextButton = document.getElementById('landingpage-next');
@@ -82,6 +84,10 @@ const LandingPage = () => {
         setIsModalOpen(false);
     };
 
+    const handleDiscoverClick = () => {
+        navigate('/other'); // Reindirizza alla pagina Other.js
+    };
+
     const cityDescriptions = {
         Roma: "Roma, la città eterna, è ricca di antiche rovine e monumenti iconici come il Colosseo. Perditi tra le stradine di Trastevere e assapora l'autenticità della vita romana. Visita i Musei Vaticani e ammira la magnificenza della Cappella Sistina, un capolavoro senza tempo..",
         Kamakura: "Kamakura, un gioiello del Giappone, è famosa per i templi mozzafiato e il Buddha gigante. Goditi la bellezza naturale e la spiritualità di questa città storica. Passeggia lungo il sentiero di Daibutsu e scopri il fascino della cultura giapponese in ogni angolo.",
@@ -115,7 +121,7 @@ const LandingPage = () => {
                                     {cityDescriptions[city]}
                                 </div>
                                 <div className="landingpage-buttons">
-                                    <button>Scopri</button>
+                                    <button onClick={handleDiscoverClick}>Scopri</button>
                                     <button onClick={openModal} className="landingpage-subscribe-button">Accedi</button>
                                 </div>
                             </div>
