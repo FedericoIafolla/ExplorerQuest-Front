@@ -10,11 +10,9 @@ const LandingPage = () => {
     useEffect(() => {
         const nextButton = document.getElementById('landingpage-next');
         const prevButton = document.getElementById('landingpage-prev');
-
         const carousel = document.querySelector('.landingpage-carousel');
         const slider = carousel.querySelector('.landingpage-carousel .landingpage-list');
         const thumbnailBorder = document.querySelector('.landingpage-carousel .landingpage-thumbnail');
-
         const timeRunning = 3000;
         const timeAutoNext = 7000;
         let autoNext;
@@ -22,10 +20,8 @@ const LandingPage = () => {
 
         const showSlider = (type) => {
             clearInterval(autoNext);
-
             const sliderItems = slider.querySelectorAll('.landingpage-carousel .landingpage-list .landingpage-item');
             const thumbnailItems = document.querySelectorAll('.landingpage-carousel .landingpage-thumbnail .landingpage-item');
-
             if (type === 'next') {
                 slider.appendChild(sliderItems[0]);
                 thumbnailBorder.appendChild(thumbnailItems[0]);
@@ -35,12 +31,10 @@ const LandingPage = () => {
                 thumbnailBorder.prepend(thumbnailItems[thumbnailItems.length - 1]);
                 carousel.classList.add('landingpage-prev');
             }
-
             setTimeout(() => {
                 carousel.classList.remove('landingpage-next');
                 carousel.classList.remove('landingpage-prev');
             }, timeRunning);
-
             resetAutoNext();
         };
 
@@ -85,7 +79,7 @@ const LandingPage = () => {
     };
 
     const handleDiscoverClick = () => {
-        navigate('/other'); // Reindirizza alla pagina Other.js
+        navigate('/other');
     };
 
     const cityDescriptions = {
@@ -102,12 +96,11 @@ const LandingPage = () => {
     };
 
     const initialCityOrder = ["Roma", "Kamakura", "NewYork", "Londra", "Parigi", "SanPaolo", "Kyoto", "TajMahal", "MachuPichu", "Atene"];
+    const countryNames = ["ITALIA", "GIAPPONE", "STATI UNITI", "INGHILTERRA", "PARIGI", "BRASILE", "GIAPPONE", "INDIA", "PERU", "GRECIA"];
 
     return (
         <div className="landingpage-page">
-            <header className="landingpage-header">
-
-            </header>
+            <header className="landingpage-header"></header>
             <div className="landingpage-carousel">
                 <div className="landingpage-list">
                     {initialCityOrder.map((city, index) => (
@@ -116,7 +109,7 @@ const LandingPage = () => {
                             <div className="landingpage-content">
                                 <div className="landingpage-author">Explorer Quest</div>
                                 <div className="landingpage-title">{city.toUpperCase()}</div>
-                                <div className="landingpage-topic">TRAVEL</div>
+                                <div className="landingpage-topic">{countryNames[index]}</div>
                                 <div className="landingpage-des">
                                     {cityDescriptions[city]}
                                 </div>
@@ -144,7 +137,6 @@ const LandingPage = () => {
                     <button id="landingpage-next">&gt;</button>
                 </div>
             </div>
-
             {isModalOpen && <LoginModal onClose={closeModal} />}
         </div>
     );
