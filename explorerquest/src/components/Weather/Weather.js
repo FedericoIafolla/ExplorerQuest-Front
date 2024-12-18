@@ -10,7 +10,6 @@ const Weather = () => {
     const API_KEY = '9505fd1df737e20152fbd78cdb289b6a';
     const API_URL = `https://api.openweathermap.org/data/2.5/weather?units=metric&lang=it&appid=${API_KEY}`;
 
-
     const searchWeather = async (city) => {
         try {
             const cityWithCountry = city.toLowerCase() === 'roma' ? 'Roma, IT' : city;
@@ -29,7 +28,6 @@ const Weather = () => {
             setTimeout(() => setError(false), 1000);
         }
     };
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -76,6 +74,7 @@ const Weather = () => {
                         />
                     </figure>
                     <figure className="temperature">
+                        {/* Icone Meteo sostituite e aggiornate */}
                         <img
                             src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@4x.png`}
                             alt="icona meteo"

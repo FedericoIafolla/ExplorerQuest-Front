@@ -13,7 +13,7 @@ const TouristSpot = () => {
             return;
         }
 
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
         if (!token) {
             alert("Devi effettuare il login per cercare punti di interesse.");
             return;

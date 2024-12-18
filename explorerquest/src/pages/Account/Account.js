@@ -1,90 +1,50 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Menu from '../../components/Menu/Menu';
 import './Account.css';
-import avatar from '../../assets/AldoBaglio.jpg';
+import avatar from '../../assets/GiacomoPoretti.jpg';
 
 const Account = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [menuActive, setMenuActive] = useState(false);
-
     const [bio, setBio] = useState(`Sono Aldo Baglio, attore e comico italiano, noto per far parte dello storico trio comico Aldo, Giovanni & Giacomo.
 
 Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creatività in ogni mio lavoro. La mia passione è creare connessione con il pubblico attraverso la risata e la narrazione.`);
-
     const [workDescriptions, setWorkDescriptions] = useState({
-        comico: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
-        attore: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
-        obiettivi: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
-        sogni: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.'
+        passioni: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
+        mete: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam euismod volutpat.',
+        pianificati: '',
+        sbloccati: ''
     });
-
     const [phone, setPhone] = useState('+123 456 789');
     const [location, setLocation] = useState('Palermo, Italia');
     const [role, setRole] = useState('Comico');
-    const [email, setEmail] = useState('Caricamento in corso...');
-
     const bioRef = useRef(null);
     const workRefs = {
-        comico: useRef(null),
-        attore: useRef(null),
-        obiettivi: useRef(null),
-        sogni: useRef(null),
+        passioni: useRef(null),
+        mete: useRef(null),
+        pianificati: useRef(null),
+        sbloccati: useRef(null),
     };
-
     const phoneRef = useRef(null);
     const locationRef = useRef(null);
     const roleRef = useRef(null);
-
     const toggleMenu = () => {
         setMenuActive((prev) => !prev);
     };
-
-    const loadUserData = async () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            setEmail('Token non trovato. Eseguire il login.');
-            return;
-        }
-
-        try {
-            const response = await fetch('/api/auth/me', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setEmail(data.email || 'Email non disponibile');
-            } else {
-                setEmail('Errore nel caricamento dei dati utente');
-            }
-        } catch (error) {
-            setEmail('Errore di rete');
-        }
-    };
-
-    useEffect(() => {
-        loadUserData();
-    }, []);
-
     const handleEditToggle = () => {
         setIsEditing(!isEditing);
     };
-
     const handleSave = () => {
         const newBio = bioRef.current.innerText;
         const newWorkDescriptions = {
-            comico: workRefs.comico.current.innerText,
-            attore: workRefs.attore.current.innerText,
-            obiettivi: workRefs.obiettivi.current.innerText,
-            sogni: workRefs.sogni.current.innerText,
+            passioni: workRefs.passioni.current.innerText,
+            mete: workRefs.mete.current.innerText,
+            pianificati: workRefs.pianificati.current.innerText,
+            sbloccati: workRefs.sbloccati.current.innerText,
         };
-
         const newPhone = phoneRef.current.innerText;
         const newLocation = locationRef.current.innerText;
         const newRole = roleRef.current.innerText;
-
         setBio(newBio);
         setWorkDescriptions(newWorkDescriptions);
         setPhone(newPhone);
@@ -92,7 +52,6 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
         setRole(newRole);
         setIsEditing(false);
     };
-
     return (
         <div className={`acc-container ${menuActive ? 'acc-menu-open' : ''}`} id="acc-container">
             <Menu menuActive={menuActive} toggleMenu={toggleMenu} />
@@ -101,7 +60,6 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
                     <div className="acc-profile-pic">
                         <img src={avatar} alt="user avatar" />
                     </div>
-
                     <div className="acc-profile-details">
                         <div className="acc-intro">
                             {isEditing ? (
@@ -138,17 +96,6 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
                                     )}
                                 </div>
                             </div>
-
-                            <div className="acc-row">
-                                <div className="acc-icon">
-                                    <i className="fa fa-envelope-open" style={{ color: 'var(--acc-light-green)' }}></i>
-                                </div>
-                                <div className="acc-content">
-                                    <span>Email</span>
-                                    <h5>{email}</h5>
-                                </div>
-                            </div>
-
                             <div className="acc-row">
                                 <div className="acc-icon">
                                     <i className="fa fa-map-marker" style={{ color: 'var(--acc-light-purple)' }}></i>
@@ -172,7 +119,6 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
                         </div>
                     </div>
                 </div>
-
                 <div className="acc-about">
                     <div className="acc-about-header">
                         <h1>Chi sono?</h1>
@@ -193,27 +139,75 @@ Con anni di esperienza in cinema, teatro e televisione, porto umorismo e creativ
                     </div>
                     <h2>Cosa faccio?</h2>
                     <div className="acc-work">
-                        {Object.keys(workDescriptions).map((key) => (
-                            <div className="acc-workbox" key={key}>
-                                <div className="acc-desc">
-                                    <h3>{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
-                                    {isEditing ? (
-                                        <div
-                                            className="acc-editable-text"
-                                            contentEditable="true"
-                                            ref={workRefs[key]}
-                                            suppressContentEditableWarning={true}
-                                        >
-                                            {workDescriptions[key]}
-                                        </div>
-                                    ) : (
-                                        <p>{workDescriptions[key]}</p>
-                                    )}
-                                </div>
+                        <div className="acc-workbox">
+                            <div className="acc-desc">
+                                <h3>Passioni</h3>
+                                {isEditing ? (
+                                    <div
+                                        className="acc-editable-text"
+                                        contentEditable="true"
+                                        ref={workRefs.passioni}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {workDescriptions.passioni}
+                                    </div>
+                                ) : (
+                                    <p>{workDescriptions.passioni}</p>
+                                )}
                             </div>
-                        ))}
+                        </div>
+                        <div className="acc-workbox">
+                            <div className="acc-desc">
+                                <h3>Mete da visitare</h3>
+                                {isEditing ? (
+                                    <div
+                                        className="acc-editable-text"
+                                        contentEditable="true"
+                                        ref={workRefs.mete}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {workDescriptions.mete}
+                                    </div>
+                                ) : (
+                                    <p>{workDescriptions.mete}</p>
+                                )}
+                            </div>
+                        </div>
+                        <div className="acc-workbox">
+                            <div className="acc-desc">
+                                <h3>Viaggi pianificati <i className="fa fa-globe"></i></h3>
+                                {isEditing ? (
+                                    <div
+                                        className="acc-editable-text"
+                                        contentEditable="true"
+                                        ref={workRefs.pianificati}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {workDescriptions.pianificati}
+                                    </div>
+                                ) : (
+                                    <h4 style={{ color: '#61e2c2', fontSize: '1.5rem' }}>0</h4>
+                                )}
+                            </div>
+                        </div>
+                        <div className="acc-workbox">
+                            <div className="acc-desc">
+                                <h3>Obiettivi sbloccati <i className="fa fa-trophy"></i></h3>
+                                {isEditing ? (
+                                    <div
+                                        className="acc-editable-text"
+                                        contentEditable="true"
+                                        ref={workRefs.sbloccati}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {workDescriptions.sbloccati}
+                                    </div>
+                                ) : (
+                                    <h4 style={{ color: '#61e2c2', fontSize: '1.5rem' }}>0/30</h4>
+                                )}
+                            </div>
+                        </div>
                     </div>
-
                     <div style={{ marginTop: '2rem' }}>
                         {!isEditing ? (
                             <button className="acc-button" onClick={handleEditToggle}>Modifica profilo</button>
