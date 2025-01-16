@@ -1,5 +1,4 @@
-/*
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
 
 .other-unique-homepage * {
   padding: 0;
@@ -156,10 +155,12 @@
   color: #fff;
 }
 
-.other-unique-homepage svg path {
+svg path {
   fill: transparent;
   stroke: #fff;
   stroke-width: 1;
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
   animation: other-unique-textAnimation 4s ease-in-out 1 forwards;
 }
@@ -342,4 +343,4 @@
     margin-top: -90px;
   }
 }
-*/
+ */

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { jsPDF } from "jspdf";
+/* import { jsPDF } from "jspdf"; */
 import html2canvas from "html2canvas";
 import Weather from "../../components/Weather/Weather";
 import TouristSpot from "../../components/TouristSpot/TouristSpot";
@@ -109,7 +109,7 @@ const Itinerary = () => {
         }
     };
 
-    const handleSavePdf = async () => {
+    /* const handleSavePdf = async () => {
         const timelineElement = document.querySelector(".itinerary-container");
 
         if (!timelineElement) {
@@ -160,7 +160,7 @@ const Itinerary = () => {
             if (bottomBar) bottomBar.style.display = "flex";
         }
     };
-
+ */
 
     return (
         <div className="itinerary-container">
